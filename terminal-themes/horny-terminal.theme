@@ -1,0 +1,50 @@
+# 💦💋 HORNY TERMINAL THEME - SENSUAL VIBES 💕🌹
+# For GNOME Terminal, Tilix, and other VTE-based terminals
+
+[Metadata]
+Name=Horny Slut
+Comment=Pink rose sensual terminal for flirty computing
+Type=custom
+
+[Colors]
+# Background - Dark rose
+Background=#1a0510
+
+# Foreground - Rose pink text
+Foreground=#ff6b9d
+
+# Cursor - Soft white with pink
+Cursor=#fff0f5
+CursorForeground=#ff4081
+
+# Selection - Coral highlight
+Selection=#ff4081
+SelectionForeground=#fff0f5
+
+# ANSI Colors
+Color0=#1a0510     /* Black - dark rose bg */
+Color1=#e91e63     /* Red - deep rose */
+Color2=#ff4081     /* Green - accent pink */
+Color3=#ff80ab     /* Yellow - light pink */
+Color4=#f06292     /* Blue - coral */
+Color5=#ff4081     /* Magenta - accent */
+Color6=#f8bbd0     /* Cyan - lavender pink */
+Color7=#fff0f5     /* White - soft white */
+
+# Bright ANSI Colors
+Color8=#2a1020     /* Bright Black */
+Color9=#f44336     /* Bright Red */
+Color10=#ff80ab    /* Bright Green */
+Color11=#ff99aa    /* Bright Yellow */
+Color12=#f48fb1    /* Bright Blue */
+Color13=#ff6b9d    /* Bright Magenta */
+Color14=#fce4ec    /* Bright Cyan */
+Color15=#ffffff    /* Bright White */
+
+[Transparency]
+# 70% transparent background for sensual feel
+BackgroundTransparency=30
+
+[Fonts]
+# Monospace font
+Font=Monospace 11

@@ -1,0 +1,165 @@
+# ✨ NORMAL MODE - i3 CONFIGURATION 🖥️
+# Clean, professional, standard Linux experience
+
+# === MOD KEY ===
+set $mod Mod4
+set $alt Mod1
+
+# === FONT ===
+font pango:Noto Sans 10
+
+# === AUTOSTART ===
+# No transparency compositor in normal mode
+# exec --no-startup-id picom
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id dunst
+exec --no-startup-id polybar main-bar
+
+# === WORKSPACE NAMES - CLEAN VERSION ===
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# === KEYBINDINGS ===
+
+# Basics
+bindsym $mod+Return exec kitty
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec rofi -show drun
+
+# MODE SWITCHING
+bindsym $mod+Shift+F1 exec ~/.config/i3/scripts/switch-mode degenerate
+bindsym $mod+Shift+F2 exec ~/.config/i3/scripts/switch-mode horny
+bindsym $mod+Shift+F3 exec ~/.config/i3/scripts/switch-mode normal
+
+# Also Alt+Fx for easier access
+bindsym $alt+F1 exec ~/.config/i3/scripts/switch-mode degenerate
+bindsym $alt+F2 exec ~/.config/i3/scripts/switch-mode horny
+bindsym $alt+F3 exec ~/.config/i3/scripts/switch-mode normal
+
+# Change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Workspaces
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Split orientation
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Layout modes
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Focus parent container
+bindsym $mod+a focus parent
+
+# === i3 GAPS - NO TRANSPARENCY ===
+gaps inner 0
+gaps outer 0
+
+# === BORDER STYLES - CLEAN DEFAULT ===
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
+# === BAR - i3bar in normal mode ===
+bar {
+    status_command i3status
+    colors {
+        background #000000
+        statusline #ffffff
+        separator  #666666
+
+        focused_workspace  #4c7899 #285577 #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        inactive_workspace #333333 #222222 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+        binding_mode       #2f343a #900000 #ffffff
+    }
+}
+
+# === WINDOW RULES ===
+assign [class="Firefox"] $ws1
+assign [class="Thunderbird"] $ws2
+assign [class="mpv"] $ws3
+assign [class="VLC"] $ws3
+
+# Floating windows
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+# === RESIZE MODE ===
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# === RESTART / EXIT ===
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"

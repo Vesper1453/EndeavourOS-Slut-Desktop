@@ -1,0 +1,328 @@
+/* 💦💋 HORNY MODE GTK THEME 💕🌹 */
+/* Sensual, sexy, flirty - but less explicit than Degenerate */
+
+/* ===== ROOT VARIABLES - SENSUAL COLORS ===== */
+@define-color horny-bg #1a0a12;
+@define-color horny-fg #ff6b9d;
+@define-color horny-accent #ff4081;
+@define-color horny-pink #ff80ab;
+@define-color horny-rose #ff4081;
+@define-color horny-coral #f06292;
+@define-color horny-red #e91e63;
+@define-color horny-white #fff0f5;
+@define-color horny-lavender #f8bbd0;
+
+/* ===== BASE WINDOW STYLES ===== */
+window {
+    background-color: @horny-bg;
+    color: @horny-pink;
+    font-family: "Noto Sans", sans-serif;
+}
+
+/* ===== TRANSPARENT WINDOWS ===== */
+window.csd,
+window.ssd,
+decoration {
+    background-color: alpha(@horny-bg, 0.70);
+    border-radius: 10px;
+    border: 1px solid @horny-accent;
+    box-shadow: 0 0 15px alpha(@horny-accent, 0.3);
+}
+
+/* ===== HEADER BARS - SENSUAL STYLE ===== */
+headerbar {
+    background: linear-gradient(
+        to bottom,
+        alpha(@horny-coral, 0.8),
+        alpha(@horny-rose, 0.7)
+    );
+    color: @horny-white;
+    border-bottom: 1px solid @horny-accent;
+    box-shadow: 0 2px 8px alpha(@horny-accent, 0.2);
+}
+
+headerbar:backdrop {
+    background: alpha(@horny-bg, 0.9);
+}
+
+/* ===== BUTTONS - PINK FLIRTY BUTTONS ===== */
+button {
+    background: linear-gradient(
+        to bottom,
+        alpha(@horny-pink, 0.3),
+        alpha(@horny-rose, 0.2)
+    );
+    color: @horny-white;
+    border: 1px solid @horny-accent;
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(
+        to bottom,
+        alpha(@horny-pink, 0.5),
+        alpha(@horny-rose, 0.4)
+    );
+    box-shadow: 0 0 12px alpha(@horny-accent, 0.5);
+    border-color: @horny-red;
+}
+
+button:active {
+    background: alpha(@horny-accent, 0.5);
+}
+
+button:checked {
+    background: alpha(@horny-accent, 0.4);
+    border-color: @horny-red;
+}
+
+/* ===== ENTRY FIELDS ===== */
+entry {
+    background-color: alpha(@horny-bg, 0.9);
+    color: @horny-pink;
+    border: 2px solid alpha(@horny-accent, 0.4);
+    border-radius: 6px;
+    padding: 8px;
+    caret-color: @horny-red;
+}
+
+entry:focus {
+    border-color: @horny-accent;
+    box-shadow: 0 0 8px alpha(@horny-accent, 0.3);
+}
+
+entry selection {
+    background-color: @horny-accent;
+    color: @horny-white;
+}
+
+/* ===== TEXTVIEW ===== */
+textview {
+    background-color: alpha(@horny-bg, 0.70);
+    color: @horny-pink;
+}
+
+textview text {
+    background-color: transparent;
+    color: @horny-pink;
+}
+
+/* ===== SIDEBARS ===== */
+sidebar {
+    background-color: alpha(@horny-bg, 0.9);
+    border-right: 1px solid alpha(@horny-accent, 0.3);
+}
+
+/* ===== LISTS & TREEVIEWS ===== */
+list {
+    background-color: alpha(@horny-bg, 0.70);
+}
+
+row {
+    color: @horny-pink;
+    transition: all 0.2s ease;
+}
+
+row:hover {
+    background-color: alpha(@horny-accent, 0.2);
+}
+
+row:selected {
+    background-color: alpha(@horny-accent, 0.3);
+    color: @horny-white;
+}
+
+/* ===== NOTEBOOKS/TABS ===== */
+notebook {
+    background-color: alpha(@horny-bg, 0.70);
+    border: 1px solid alpha(@horny-accent, 0.3);
+}
+
+notebook tab {
+    background-color: alpha(@horny-bg, 0.9);
+    color: @horny-pink;
+    border: 1px solid alpha(@horny-accent, 0.3);
+    padding: 8px 16px;
+}
+
+notebook tab:hover {
+    background-color: alpha(@horny-accent, 0.15);
+}
+
+notebook tab:checked {
+    background-color: alpha(@horny-accent, 0.3);
+    color: @horny-white;
+    border-bottom: 2px solid @horny-red;
+}
+
+/* ===== SCROLLBARS ===== */
+scrollbar {
+    background-color: alpha(@horny-bg, 0.6);
+    border-radius: 8px;
+}
+
+scrollbar slider {
+    background-color: alpha(@horny-pink, 0.5);
+    border-radius: 8px;
+    min-width: 12px;
+    min-height: 12px;
+}
+
+scrollbar slider:hover {
+    background-color: @horny-accent;
+}
+
+/* ===== MENUS ===== */
+menu {
+    background-color: alpha(@horny-bg, 0.95);
+    border: 1px solid @horny-accent;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+menuitem {
+    color: @horny-pink;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+menuitem:hover {
+    background-color: alpha(@horny-accent, 0.25);
+    color: @horny-white;
+}
+
+/* ===== TOOLTIPS ===== */
+tooltip {
+    background-color: alpha(@horny-coral, 0.95);
+    color: @horny-white;
+    border: 1px solid @horny-accent;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+/* ===== PROGRESS BARS ===== */
+progressbar {
+    background-color: alpha(@horny-bg, 0.6);
+    border-radius: 12px;
+}
+
+progressbar trough {
+    background-color: alpha(@horny-bg, 0.4);
+    border-radius: 12px;
+    min-height: 12px;
+}
+
+progressbar progress {
+    background: linear-gradient(
+        to right,
+        @horny-pink,
+        @horny-accent
+    );
+    border-radius: 12px;
+    min-height: 12px;
+}
+
+/* ===== SWITCHES ===== */
+switch {
+    background-color: alpha(@horny-bg, 0.6);
+    border: 1px solid @horny-accent;
+    border-radius: 14px;
+}
+
+switch:checked {
+    background-color: alpha(@horny-accent, 0.4);
+}
+
+switch slider {
+    background-color: @horny-pink;
+    border-radius: 12px;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+/* ===== SCALES/SLIDERS ===== */
+scale {
+    background-color: transparent;
+}
+
+scale trough {
+    background-color: alpha(@horny-bg, 0.6);
+    border-radius: 4px;
+    min-height: 8px;
+}
+
+scale highlight {
+    background-color: @horny-accent;
+    border-radius: 4px;
+}
+
+scale slider {
+    background-color: @horny-pink;
+    border: 2px solid @horny-red;
+    border-radius: 50%;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+/* ===== DIALOGS ===== */
+dialog {
+    background-color: alpha(@horny-bg, 0.95);
+    border: 1px solid @horny-accent;
+    border-radius: 12px;
+}
+
+messagedialog {
+    background-color: alpha(@horny-bg, 0.95);
+}
+
+/* ===== FILE CHOOSER ===== */
+filechooser {
+    background-color: alpha(@horny-bg, 0.70);
+}
+
+filechooser placessidebar {
+    background-color: alpha(@horny-bg, 0.9);
+    border-right: 1px solid alpha(@horny-accent, 0.3);
+}
+
+/* ===== CALENDARS ===== */
+calendar {
+    background-color: alpha(@horny-bg, 0.9);
+    color: @horny-pink;
+    border: 1px solid @horny-accent;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+calendar:selected {
+    background-color: @horny-accent;
+    color: @horny-white;
+    border-radius: 4px;
+}
+
+/* ===== LINKS ===== */
+link {
+    color: @horny-pink;
+}
+
+link:hover {
+    color: @horny-red;
+}
+
+link:visited {
+    color: @horny-coral;
+}
+
+/* ===== PANELS & DOCKS ===== */
+panel {
+    background-color: alpha(@horny-bg, 0.9);
+    border-top: 1px solid alpha(@horny-accent, 0.3);
+}
+
+/* ===== TERMINAL SPECIFIC ===== */
+.vte-terminal {
+    background-color: alpha(@horny-bg, 0.70);
+    color: @horny-pink;
+}

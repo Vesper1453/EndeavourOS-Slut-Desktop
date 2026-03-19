@@ -1,0 +1,50 @@
+# 🍆💦 DEGENERATE TERMINAL THEME - MAXIMUM FILTH 💋🔥
+# For GNOME Terminal, Tilix, and other VTE-based terminals
+
+[Metadata]
+Name=Degenerate Slut
+Comment=Deep pink/purple cum-stained terminal for maximum degeneracy
+Type=custom
+
+[Colors]
+# Background - Deep degenerate purple-black
+Background=#1a0a1a
+
+# Foreground - Hot pink text
+Foreground=#ff69b4
+
+# Cursor - Cum white with pink glow
+Cursor=#fff5f5
+CursorForeground=#ff1493
+
+# Selection - Deep pink highlight
+Selection=#ff0066
+SelectionForeground=#fff5f5
+
+# ANSI Colors
+Color0=#0d0208     /* Black - deep degenerate bg */
+Color1=#ff0033     /* Red - cum red */
+Color2=#ff1493     /* Green - deep pink */
+Color3=#ff69b4     /* Yellow - hot pink */
+Color4=#9400d3     /* Blue - purple */
+Color5=#ff0066     /* Magenta - accent pink */
+Color6=#ffb6c1     /* Cyan - pussy pink */
+Color7=#fff5f5     /* White - cum white */
+
+# Bright ANSI Colors
+Color8=#2a1520     /* Bright Black */
+Color9=#ff3366     /* Bright Red */
+Color10=#ff69b4    /* Bright Green */
+Color11=#ff99cc    /* Bright Yellow */
+Color12=#a020f0    /* Bright Blue */
+Color13=#ff1493    /* Bright Magenta */
+Color14=#ffc0cb    /* Bright Cyan */
+Color15=#ffffff    /* Bright White */
+
+[Transparency]
+# 85% transparent background for maximum slutty visibility
+BackgroundTransparency=15
+
+[Fonts]
+# Monospace font - use a nice programming font
+Font=Monospace 11
