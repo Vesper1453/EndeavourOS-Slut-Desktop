@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 🍆💦 TAILS SLUT DESKTOP - ONE-CLICK INSTALLER 💋🔥
-# Run this to set up everything automatically!
+# Works on Tails (Debian), Arch Linux, and EndeavourOS!
 
 set -e
 
@@ -14,6 +14,44 @@ RED='\033[38;5;196m'
 PURPLE='\033[38;5;93m'
 GREEN='\033[38;5;82m'
 RESET='\033[0m'
+
+# ===== DISTRO DETECTION =====
+detect_distro() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        DISTRO=$ID
+        DISTRO_LIKE=$ID_LIKE
+    else
+        DISTRO="unknown"
+    fi
+    
+    # Check if Arch-based
+    if [[ "$DISTRO" == "arch" ]] || [[ "$DISTRO" == "endeavouros" ]] || [[ "$DISTRO_LIKE" == *"arch"* ]]; then
+        IS_ARCH=true
+        PACKAGE_MANAGER="pacman"
+        INSTALL_CMD="sudo pacman -S --needed --noconfirm"
+        AUR_HELPER=""
+        
+        # Check for AUR helper
+        if command -v yay &> /dev/null; then
+            AUR_HELPER="yay"
+        elif command -v paru &> /dev/null; then
+            AUR_HELPER="paru"
+        fi
+        
+        echo -e "${PINK}💋 Arch Linux detected! Using pacman...${RESET}"
+    else
+        IS_ARCH=false
+        PACKAGE_MANAGER="apt"
+        INSTALL_CMD="sudo apt-get install -y"
+        AUR_HELPER=""
+        
+        echo -e "${PINK}💋 Debian/Ubuntu detected! Using apt...${RESET}"
+    fi
+}
+
+# Detect distro at start
+detect_distro
 
 echo -e "${PURPLE}"
 cat << 'EOF'
@@ -86,7 +124,17 @@ EOF
 }
 
 install_packages() {
-    echo -e "${HOT_PINK}📦 Installing all slutty packages...${RESET}"
+    echo -e "${HOT_PINK}📦 Installing all slutty packages for your distro...${RESET}"
+    
+    if [ "$IS_ARCH" = true ]; then
+        install_packages_arch
+    else
+        install_packages_debian
+    fi
+}
+
+install_packages_debian() {
+    echo -e "${PINK}📦 Using apt-get (Debian/Ubuntu/Tails)...${RESET}"
     
     sudo apt-get update
     
@@ -94,20 +142,70 @@ install_packages() {
     sudo apt-get install -y \
         i3 i3-wm i3status i3lock dmenu \
         picom nitrogen kitty rofi polybar \
-        gnome-terminal gnome-tweaks \
+        dunst gnome-terminal gnome-tweaks \
         ffmpeg mpv mplayer vlc \
         chafa caca-utils libcaca-dev \
         zsh bash-completion \
-        feh sxiv imv \
+        feh sxiv \
         ranger nnn thunar \
-        htop btop dunst libnotify-bin \
+        htop btop libnotify-bin \
         conky-all neofetch cmatrix \
         fortune-mod cowsay lolcat \
+        wmctrl xdotool xclip \
         git curl wget 2>/dev/null || {
         echo -e "${RED}⚠️  Some packages may have failed to install${RESET}"
     }
     
-    echo -e "${GREEN}✅ Packages installed!${RESET}"
+    echo -e "${GREEN}✅ Debian packages installed!${RESET}"
+}
+
+install_packages_arch() {
+    echo -e "${PINK}📦 Using pacman (Arch/EndeavourOS)...${RESET}"
+    
+    # Update pacman database
+    sudo pacman -Sy
+    
+    # Core packages (Arch names)
+    sudo pacman -S --needed --noconfirm \
+        i3-wm i3status i3lock dmenu \
+        picom nitrogen kitty rofi polybar \
+        dunst lxappearance \
+        ffmpeg mpv \
+        libcaca libsixel \
+        zsh zsh-completions \
+        feh imagemagick \
+        ranger thunar \
+        htop btop \
+        conky neofetch cmatrix \
+        fortune-mod cowsay \
+        wmctrl xdotool xclip \
+        git curl wget \
+        noto-fonts noto-fonts-emoji \
+        ttf-nerd-fonts-symbols-mono \
+        ttf-font-awesome \
+        2>/dev/null || {
+        echo -e "${RED}⚠️  Some packages may have failed to install${RESET}"
+    }
+    
+    # Install AUR packages if helper available
+    if [ -n "$AUR_HELPER" ]; then
+        echo -e "${HOT_PINK}💋 Installing AUR packages with $AUR_HELPER...${RESET}"
+        
+        if [ "$AUR_HELPER" = "yay" ]; then
+            yay -S --needed --noconfirm \
+                cava \
+                2>/dev/null || true
+        elif [ "$AUR_HELPER" = "paru" ]; then
+            paru -S --needed --noconfirm \
+                cava \
+                2>/dev/null || true
+        fi
+    else
+        echo -e "${PINK}⚠️  No AUR helper found (yay/paru). Some extra packages skipped.${RESET}"
+        echo -e "${PINK}   Install yay: git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si${RESET}"
+    fi
+    
+    echo -e "${GREEN}✅ Arch packages installed!${RESET}"
 }
 
 install_i3() {

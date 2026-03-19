@@ -1,6 +1,26 @@
 # 🍆💦 Tails Slut Desktop - The Most Depraved Linux Experience 💋🔥
 
-A fully customized Tails Linux desktop environment with three deliciously explicit modes for all your whorish computing needs.
+A fully customized Linux desktop environment with three deliciously explicit modes for all your whorish computing needs.
+
+**✅ Works on:**
+- 🔒 Tails Linux (Debian-based)
+- 🏹 Arch Linux
+- 🚀 EndeavourOS (and other Arch-based distros)
+
+## ⚡ Quick Install
+
+```bash
+# One-line install (works on any supported distro with internet)
+curl -fsSL https://raw.githubusercontent.com/Vesper1453/TailsSlutDesktop/main/install.sh | bash
+```
+
+Or clone manually:
+
+```bash
+git clone https://github.com/Vesper1453/TailsSlutDesktop.git
+cd TailsSlutDesktop
+./install.sh
+```
 
 ## 🎭 Available Modes
 
@@ -17,166 +37,143 @@ The ultimate slutty desktop experience:
 ### 💦 HORNY MODE 💦
 Sensual but less extreme:
 - Sexy lingerie-themed wallpaper
-- Rose/coral UI with flirty colors
+- Rose/coral UI with flirty icons
 - Transparent windows at 70% opacity
+- One-click access to adult sites
+- Sexy terminal aesthetic
 - Flirty workspace names (💋 Home, 🌹 Love, etc.)
-- Sensual terminal theme
-- No adult site shortcuts
 
 ### ✨ NORMAL MODE ✨
-Clean and professional:
-- Standard Tails wallpaper
-- Default GTK theme
-- No transparency
-- Standard workspace names
-- Removes all adult content
+Clean, professional appearance:
+- Standard Tails/GNOME look
+- No transparency effects
+- Removes all adult shortcuts
+- Perfect for public/in-person use
+- Can switch back to slutty modes anytime
 
 ---
 
-## ⌨️ HOTKEYS (i3 Window Manager)
+## 💻 Supported Desktop Environments
 
-When using **i3 tiling window manager**, you can instantly switch modes with hotkeys:
+### i3 Window Manager (Recommended for sluts)
+- ⚡ Lightweight and fast
+- 🔥 Hotkey mode switching (Alt+F1/F2/F3)
+- 🚨 Panic button hotkey (Mod+Shift+Delete)
+- 🎨 Rounded corners with i3-gaps
+- 📦 Works on both Tails AND Arch
 
+### GNOME/GTK (Alternative)
+- 🖥️ Full desktop environment
+- 🎨 GTK theme switching
+- 📱 Desktop shortcuts for all modes
+
+---
+
+## 📦 Package Lists
+
+- **Debian/Ubuntu/Tails**: See `PACKAGES.md`
+- **Arch/EndeavourOS**: See `PACKAGES-ARCH.md`
+
+---
+
+## 🔥 Features
+
+### Hotkeys (i3)
 | Hotkey | Action |
 |--------|--------|
 | `Alt + F1` | 🔥 Switch to DEGENERATE mode |
 | `Alt + F2` | 💦 Switch to HORNY mode |
 | `Alt + F3` | ✨ Switch to NORMAL mode |
-| `Mod + Return` | Open slutty-themed terminal |
-| `Mod + d` | Open application menu |
-| `Mod + Shift + q` | Close window |
-| `Mod + 1-0` | Switch workspaces |
+| `Mod + Shift + Delete` | 🚨 PANIC BUTTON (emergency wipe) |
 
-### 🍆 Degenerate Mode Quick Adult Site Hotkeys
-| Hotkey | Site |
-|--------|------|
-| `Mod + Shift + p` | Pornhub |
-| `Mod + Shift + x` | Xvideos |
-| `Mod + Shift + b` | Spankbang |
-| `Mod + Shift + h` | Hentai Haven |
-| `Mod + Shift + r` | Rule34 |
-
----
-
-## 🖥️ i3 vs GNOME Feature Comparison
-
-| Feature | i3 (Recommended) | GNOME |
-|---------|------------------|-------|
-| Mode Hotkeys | ✅ Alt+F1/F2/F3 | ❌ Desktop shortcuts only |
-| i3-gaps | ✅ 15px inner, 10px outer | N/A |
-| Transparency | ✅ Picom compositor | ⚠️ Limited |
-| Tiling windows | ✅ Automatic | Manual only |
-| Slutty workspaces | ✅ Explicit emoji names | Standard names |
-| Performance | ⚡ Lightweight | Heavier |
-| Adult site hotkeys | ✅ Mod+Shift+P etc | ❌ |
-
----
-
-## ⚡ Quick Install
+### Terminal Video Viewer
+Watch porn in your terminal with ASCII art or Sixel graphics!
 
 ```bash
-# One-line install (works on any Tails system with internet)
-curl -fsSL https://raw.githubusercontent.com/Vesper1453/TailsSlutDesktop/main/install.sh | bash
+~/terminal-video.sh -a video.mp4   # ASCII mode
+~/terminal-video.sh -s video.mp4   # Sixel (high quality)
+~/terminal-video.sh -c video.mp4   # libcaca (color ASCII)
 ```
 
-Or clone manually:
-
-```bash
-git clone https://github.com/Vesper1453/TailsSlutDesktop.git
-cd TailsSlutDesktop
-./install.sh
-```
+### Panic Button
+Instantly hide all evidence:
+- Closes all browser windows
+- Clears browser data
+- Hides adult shortcuts
+- Switches to Normal mode
+- Clears terminal history
 
 ---
 
-## 🎨 Included Themes
-
-### Terminal Themes
-- `degenerate-terminal.theme` - Cum-stained colors (85% transparency)
-- `horny-terminal.theme` - Rose/coral colors (70% transparency)
-- Custom bash/zsh prompts with slutty symbols
-
-### GTK Themes
-- `degenerate-gtk.css` - Deep pink/purple pornographic theme
-- `horny-gtk.css` - Rose/coral sensual theme
-
-### i3 Configs
-- `config-degenerate` - Explicit workspace names, adult site shortcuts
-- `config-horny` - Flirty workspace names, sensual colors
-- `config-normal` - Clean, standard i3 configuration
-
-### Picom (Compositor) Configs
-- `picom-degenerate.conf` - 85% opacity, heavy blur
-- `picom-horny.conf` - 70% opacity, light blur
-
----
-
-## 📁 Directory Structure
+## 🗂️ Repository Structure
 
 ```
 TailsSlutDesktop/
 ├── 📄 README.md                    # This file
-├── 📄 QUICKSTART.md                # Quick reference
-├── 🚀 install.sh                   # One-click installer
-├── 📁 i3/
-│   ├── config-degenerate          # i3 config: Degenerate mode
-│   ├── config-horny               # i3 config: Horny mode
-│   ├── config-normal              # i3 config: Normal mode
+├── 📄 PACKAGES.md                  # Debian/Ubuntu/Tails packages
+├── 📄 PACKAGES-ARCH.md             # Arch/EndeavourOS packages
+├── 📄 QUICKSTART.md               # Quick reference
+├── 📄 LICENSE                      # WTFPL license
+├── 🚀 install.sh                  # Main installer (cross-distro)
+├── 📁 i3/                         # i3 configurations
+│   ├── config-degenerate
+│   ├── config-horny
+│   ├── config-normal
 │   └── scripts/
-│       └── switch-mode            # i3 mode switcher
-├── 📁 themes/
-│   ├── degenerate-gtk.css         # GTK theme: Degenerate
-│   └── horny-gtk.css              # GTK theme: Horny
-├── 📁 terminal-themes/
-│   ├── degenerate-bash-prompt.sh  # Bash prompt: Degenerate
-│   ├── degenerate-zsh-prompt.zsh  # Zsh prompt: Degenerate
-│   ├── horny-bash-prompt.sh       # Bash prompt: Horny
-│   ├── horny-zsh-prompt.zsh       # Zsh prompt: Horny
-│   ├── degenerate-terminal.theme  # Terminal colors
-│   └── horny-terminal.theme       # Terminal colors
-├── 📁 picom/
-│   ├── picom-degenerate.conf      # 85% transparency
-│   └── picom-horny.conf           # 70% transparency
-├── 📁 scripts/
-│   ├── mode-switcher.sh           # Main mode switcher
-│   └── setup.sh                   # Setup script
-├── 📁 wallpapers/
-│   ├── degenerate_wallpaper.jpg  # 🔥 Explicit (19KB)
-│   └── horny_wallpaper.jpg       # 💦 Lingerie (76KB)
-└── 📁 bookmarks/
-    └── (adult site .desktop files)
+├── 📁 themes/                     # GTK themes
+│   ├── degenerate-gtk.css
+│   └── horny-gtk.css
+├── 📁 terminal-themes/            # Terminal themes
+│   ├── degenerate-terminal.theme
+│   ├── horny-terminal.theme
+│   └── *.zsh / *.bash
+├── 📁 picom/                      # Transparency configs
+│   ├── picom-degenerate.conf
+│   └── picom-horny.conf
+├── 📁 wallpapers/                 # Wallpaper images
+│   ├── degenerate_wallpaper.jpg
+│   └── horny_wallpaper.jpg
+├── 📁 scripts/                    # Utility scripts
+│   ├── setup.sh
+│   ├── mode-switcher.sh
+│   ├── panic-button.sh
+│   └── terminal-video-viewer.sh
+└── 📁 bookmarks/                  # Adult site bookmarks
 ```
 
 ---
 
-## 🔗 Adult Sites Included
+## 🔥 Keyboard Shortcuts Reference
 
-**Mainstream (8):** Pornhub, Xvideos, Xnxx, Redtube, Youporn, Tube8, Spankbang, xHamster
+### Mode Switching
+| Shortcut | Mode |
+|----------|------|
+| `Alt + F1` | 🔥 DEGENERATE |
+| `Alt + F2` | 💦 HORNY |
+| `Alt + F3` | ✨ NORMAL |
 
-**Cam Sites (6):** Chaturbate, CamSoda, Stripchat, BongaCams, MyFreeCams, JerkMate
+### i3 Window Management
+| Shortcut | Action |
+|----------|--------|
+| `Mod + Enter` | Open terminal |
+| `Mod + d` | Open rofi (app launcher) |
+| `Mod + Shift + q` | Close window |
+| `Mod + 1-0` | Switch workspace |
+| `Mod + Shift + 1-0` | Move window to workspace |
+| `Mod + Shift + Delete` | 🚨 PANIC BUTTON |
 
-**Hentai/Rule34 (8):** Hentai Haven, Rule34, E621, Gelbooru, Danbooru, E-Hentai, ExHentai, Luscious
+### Quick Adult Sites (i3 - Degenerate Mode)
+| Shortcut | Site |
+|----------|------|
+| `Mod + Shift + p` | Pornhub |
+| `Mod + Shift + x` | Xvideos |
+| `Mod + Shift + b` | Spankbang |
+| `Mod + Shift + h` | Hentai Haven |
+| `Mod + Shift + c` | Chaturbate |
 
 ---
 
-## 🛠️ Manual Mode Switching
-
-If you prefer terminal commands:
-
-```bash
-# Switch to DEGENERATE mode (explicit, 85% transparency)
-./scripts/mode-switcher.sh degenerate
-
-# Switch to HORNY mode (sexy, 70% transparency)
-./scripts/mode-switcher.sh horny
-
-# Switch to NORMAL mode (clean, 0% transparency)
-./scripts/mode-switcher.sh normal
-```
-
----
-
-## 🎭 Workspace Names by Mode
+## 🖥️ Workspace Names
 
 ### Degenerate Mode (i3)
 | Number | Name |
@@ -210,10 +207,10 @@ If you prefer terminal commands:
 
 ## 💋 Stay Filthy, Slut!
 
-For support, questions, or to request more depraved features, check the [Zo Computer Discord](https://discord.gg/invite/zocomputer).
+**GitHub**: https://github.com/Vesper1453/TailsSlutDesktop
 
 *Remember: Always practice safe computing. Use Tor Browser for adult sites on Tails!* 🔒🧅
 
 ---
 
-**Made with 💦 by your slutty AI guide**
+**Made with 💦 for Debian and Arch sluts everywhere** 🔥
