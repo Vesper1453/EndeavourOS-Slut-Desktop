@@ -1,130 +1,140 @@
-# 🍆💦 QUICK START GUIDE 💋🔥
+# ⚡ Quick Start Guide
 
 Get your slutty Tails desktop running in 60 seconds!
 
 ---
 
-## ⚡ ONE-TIME SETUP
+## 🚀 One-Line Install (Copy & Paste)
 
 ```bash
-# 1. Navigate to the TailsSlutDesktop folder
-cd ~/TailsSlutDesktop
+# Clone and install everything
+curl -fsSL https://raw.githubusercontent.com/Vesper1453/TailsSlutDesktop/main/install.sh | bash
+```
 
-# 2. Run the setup script
-./scripts/setup.sh
+Or manually:
 
-# 3. Done! Your desktop shortcuts are ready.
+```bash
+# 1. Clone the repository
+cd ~ && git clone https://github.com/Vesper1453/TailsSlutDesktop.git
+
+# 2. Run the installer
+cd TailsSlutDesktop && ./install.sh
 ```
 
 ---
 
-## 🎭 SWITCHING MODES
+## ⌨️ HOTKEYS (i3 Window Manager)
 
-### Method 1: Desktop Shortcuts (Easiest)
-Just double-click on your Desktop:
-- 🔥-DEGENERATE-MODE - Maximum filth
-- 💦-HORNY-MODE - Sensual vibes  
-- ✨-NORMAL-MODE - Clean & professional
+| Hotkey | Action |
+|--------|--------|
+| `Alt + F1` | 🔥 **DEGENERATE MODE** - Maximum filth |
+| `Alt + F2` | 💦 **HORNY MODE** - Sensual vibes |
+| `Alt + F3` | ✨ **NORMAL MODE** - Clean & professional |
+| `Mod + Shift + Delete` | 🚨 **PANIC BUTTON** - Emergency wipe |
 
-### Method 2: Terminal Commands
+### Adult Site Quick Hotkeys (Degenerate Mode Only)
+| Hotkey | Site |
+|--------|------|
+| `Mod + Shift + p` | Pornhub |
+| `Mod + Shift + x` | Xvideos |
+| `Mod + Shift + b` | Spankbang |
+| `Mod + Shift + h` | Hentai Haven |
+| `Mod + Shift + r` | Rule34 |
+
+---
+
+## 📦 What Gets Installed
+
+### 🔥 Core Features
+- **i3 Window Manager** with i3-gaps
+- **Three Modes**: Degenerate (85% transparency), Horny (70%), Normal (0%)
+- **Panic Button** - Instant evidence wipe (Mod+Shift+Delete)
+- **Terminal Video Player** - Watch porn in ASCII/Sixel
+- **Hotkey Mode Switching** - Alt+F1/F2/F3
+
+### 🖥️ i3 Features
+- Slutty workspace names (🍑 Porn, 💦 Filth, etc.)
+- Transparent windows via picom
+- Adult site shortcuts on desktop
+- Custom pink/purple themes
+
+### 🎬 Terminal Video Player
 ```bash
-# DEGENERATE MODE - Explicit wallpaper, adult sites, 85% transparency
-./scripts/mode-switcher.sh degenerate
+# Watch videos in terminal!
+~/terminal-video.sh -a video.mp4     # ASCII mode
+~/terminal-video.sh -s video.mp4     # Sixel mode (high quality)
+~/terminal-video.sh -c video.mp4     # libcaca (color ASCII)
+```
 
-# HORNY MODE - Sexy theme, 70% transparency
-./scripts/mode-switcher.sh horny
+### 🚨 Panic Button
+- Closes all browsers instantly
+- Clears cache/history
+- Hides adult shortcuts
+- Switches to clean mode
+- Desktop shortcut: 🚨-PANIC-BUTTON
 
-# NORMAL MODE - Clean Tails defaults
-./scripts/mode-switcher.sh normal
+---
+
+## 🎭 The Three Modes
+
+### 🔥 DEGENERATE MODE
+- Explicit pornographic wallpaper
+- 85% window transparency
+- Adult site shortcuts (17+ sites)
+- Explicit emoji workspaces
+- Deep pink/red UI
+
+### 💦 HORNY MODE
+- Sexy lingerie wallpaper
+- 70% window transparency
+- Flirty rose/coral UI
+- No adult shortcuts
+- Sensual workspace names
+
+### ✨ NORMAL MODE
+- Clean Tails default
+- No transparency
+- No adult content
+- Standard workspaces
+
+---
+
+## 📋 Post-Install Checklist
+
+```bash
+# 1. Log out and select 'i3' from the session menu
+# 2. Press Alt+F1 to activate DEGENERATE mode
+# 3. Press Mod+Shift+Delete to test the PANIC BUTTON
+# 4. Try: ~/terminal-video.sh --help
 ```
 
 ---
 
-## 📂 WHAT'S INCLUDED
+## 🆘 Troubleshooting
 
-| Feature | Degenerate | Horny | Normal |
-|---------|-----------|-------|--------|
-| Wallpaper | Explicit image 🔥 | Sexy theme 💦 | Default ✨ |
-| Transparency | 85% | 70% | 0% |
-| Adult Links | Yes (17 sites) | No | No |
-| Color Scheme | Deep pink/purple | Rose/coral | Default |
-| Terminal Style | Cum-stained 🍆 | Flirty 💋 | Clean |
-
----
-
-## 🔗 ADULT SITES IN DEGENERATE MODE
-
-When you activate Degenerate Mode, these sites appear on your desktop:
-
-**Mainstream (8 sites):**
-Pornhub, Xvideos, Xnxx, Redtube, Youporn, Tube8, Spankbang, xHamster
-
-**Cam/OnlyFans (6 sites):**
-Chaturbate, CamSoda, Stripchat, BongaCams, MyFreeCams, JerkMate
-
-**Hentai/Rule34 (6 sites):**
-Hentai Haven, Rule34, E621, Gelbooru, Danbooru, E-Hentai, ExHentai, Luscious
-
----
-
-## 💻 TERMINAL CUSTOMIZATION
-
-Add slutty prompts to your shell:
-
-**For Bash:**
+### i3 not showing in session menu?
 ```bash
-# Add to ~/.bashrc:
-echo "source ~/TailsSlutDesktop/terminal-themes/degenerate-bash-prompt.sh" >> ~/.bashrc
-# Or for horny mode:
-echo "source ~/TailsSlutDesktop/terminal-themes/horny-bash-prompt.sh" >> ~/.bashrc
+sudo apt-get install i3 i3-wm
+# Then log out and back in
 ```
 
-**For Zsh:**
+### Transparency not working?
 ```bash
-# Add to ~/.zshrc:
-echo "source ~/TailsSlutDesktop/terminal-themes/degenerate-zsh-prompt.zsh" >> ~/.zshrc
+picom --config ~/.config/picom/picom-degenerate.conf -b
+```
+
+### Panic button hotkey not working?
+Add this to `~/.config/i3/config`:
+```
+bindsym Mod4+Shift+Delete exec ~/.config/i3/scripts/panic-button
 ```
 
 ---
 
-## 🎨 CUSTOMIZATION
+## 🔗 Repository
 
-### Change Transparency Level
-Edit the GTK theme files in `themes/`:
-- Look for `alpha(@color, 0.85)` values
-- 0.85 = 85% opaque (15% transparent)
-- 0.70 = 70% opaque (30% transparent)
-
-### Change Colors
-Edit the CSS variables at the top of each theme file:
-- `@define-color degenerate-bg` - Background
-- `@define-color degenerate-fg` - Foreground
-- `@define-color degenerate-accent` - Accents
-
-### Add More Sites
-Edit `scripts/mode-switcher.sh` and add more `.desktop` entries in the `create_adult_shortcuts` function.
+**GitHub**: https://github.com/Vesper1453/TailsSlutDesktop
 
 ---
 
-## 🛠️ TROUBLESHOOTING
-
-| Issue | Solution |
-|-------|----------|
-| Transparency not working | Tails uses GNOME's compositor - should work by default |
-| Scripts won't run | Run `chmod +x scripts/*.sh` |
-| Colors look wrong | Make sure GTK CSS files are in `~/.config/gtk-3.0/` |
-| Wallpaper doesn't change | Check that `degenerate_wallpaper.jpg` exists in `wallpapers/` |
-
----
-
-## 🔒 PERSISTENCE ON TAILS
-
-To keep your slutty desktop across reboots:
-
-1. Copy `TailsSlutDesktop` to your **Tails persistent storage**
-2. Enable "Personal Data" persistence
-3. The desktop shortcuts and themes will persist!
-
----
-
-*Stay filthy, slut! 🍆💦💋🔥*
+💋 **Stay filthy, slut!** 🔥
