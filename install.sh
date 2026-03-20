@@ -885,6 +885,10 @@ switch_kde_mode() {
     esac
 }
 
+verify_installation() {
+    echo -e "${HOT_PINK}"
+}
+
 # Detect terminal at start for desktop file creation
 detect_terminal
 
