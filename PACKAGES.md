@@ -1,317 +1,194 @@
-# 📦 Package List for Tails Slut Desktop
+# 📦 EndeavourOS Package List
 
-This document lists all the slutty tools and packages you need for the full degenerate experience on Tails Linux.
+Complete package list for the **EndeavourOS Slut Desktop**.
 
----
-
-## 🎯 Core Requirements
-
-### Window Manager (Choose One)
-
-#### Option 1: i3 (Recommended for Degenerates)
-```bash
-sudo apt-get install -y \
-    i3 i3-wm i3status i3lock dmenu \
-    picom nitrogen kitty rofi polybar
-```
-
-**Why i3?**
-- ⚡ Lightweight and fast
-- 🔥 Hotkey mode switching (Alt+F1/F2/F3)
-- 🖼️ i3-gaps support for sexy window spacing
-- 🌫️ Full transparency control via picom
-- 💦 Slutty workspace names with emojis
-
-#### Option 2: GNOME (Standard Desktop)
-```bash
-sudo apt-get install -y \
-    gnome-shell gnome-terminal gnome-tweaks \
-    dconf-editor gsettings-desktop-schemas
-```
+**⚠️ FOR ENDEAVOUROS/ARCH LINUX ONLY ⚠️**
 
 ---
 
-## 🎨 Visual Packages
+## 🚀 Core System (EndeavourOS Base)
 
-### Transparency & Compositing
-```bash
-sudo apt-get install -y \
-    picom compton \
-    xcompmgr
-```
-
-**Purpose:**
-- `picom` - Modern compositor with blur effects
-- `compton` - Legacy fallback
-- `xcompmgr` - Basic compositing
-
-### Wallpaper Management
-```bash
-sudo apt-get install -y \
-    nitrogen feh
-```
-
-**Purpose:**
-- `nitrogen` - Browse and set wallpapers
-- `feh` - Lightweight image viewer/wallpaper setter
-
-### Theming & GTK
-```bash
-sudo apt-get install -y \
-    gnome-themes-extra \
-    gtk2-engines-murrine \
-    gtk2-engines-pixbuf
-```
+EndeavourOS comes pre-installed with:
+- `firefox` - Web browser
+- `yay` - AUR helper ✨
+- `base-devel` - Compiling tools
+- `nvidia`/`amd` drivers (if applicable)
 
 ---
 
-## 🖥️ Terminal Packages
+## 📦 Required Packages
 
-### Terminal Emulators
+Install all with:
 ```bash
-sudo apt-get install -y \
-    kitty tilix gnome-terminal
+sudo pacman -S --needed i3-wm i3status i3lock dmenu i3-gaps picom nitrogen kitty rofi polybar dunst
 ```
 
-**Slutty Features:**
-- `kitty` - GPU-accelerated, supports images in terminal
-- `tilix` - Tiling terminal with transparency
-- `gnome-terminal` - Standard with profile support
+### Window Manager
+| Package | Purpose |
+|---------|---------|
+| `i3-wm` | Tiling window manager |
+| `i3-gaps` | Window gaps |
+| `i3status` | Status bar |
+| `i3lock` | Screen locker |
+| `dmenu` | Application menu |
 
-### Shell Enhancement
-```bash
-sudo apt-get install -y \
-    zsh bash-completion \
-    powerline fonts-powerline
-```
+### Compositor & Appearance
+| Package | Purpose |
+|---------|---------|
+| `picom` | Transparency/compositing |
+| `nitrogen` | Wallpaper setter |
+| `lxappearance` | GTK theme switcher |
+| `dunst` | Notifications |
+
+### Terminals
+| Package | Purpose |
+|---------|---------|
+| `kitty` | Primary terminal (GPU-accelerated) |
+| `konsole` | KDE terminal (for KDE users) |
+
+### Launchers & Bars
+| Package | Purpose |
+|---------|---------|
+| `rofi` | Application launcher |
+| `polybar` | Status bar |
 
 ---
 
-## 🎬 Media Packages (Terminal Video Viewer)
-
-### Video Players
-```bash
-sudo apt-get install -y \
-    mpv mplayer \
-    vlc
-```
-
-### Terminal Video Rendering
-```bash
-sudo apt-get install -y \
-    ffmpeg \
-    chafa \
-    caca-utils \
-    libcaca-dev
-```
-
-**Purpose:**
-- `ffmpeg` - Video processing and frame extraction
-- `chafa` - Convert images/video to ASCII/Sixel
-- `caca-utils` - Color ASCII art video playback
-- `libcaca` - Advanced ASCII art library
-
-### Image Viewers
-```bash
-sudo apt-get install -y \
-    feh sxiv \
-    imv
-```
-
----
-
-## 🌐 Browser Packages
-
-### Tor Browser (Pre-installed on Tails)
-Tails comes with Tor Browser - use this for all adult site browsing!
-
-### Alternative Browsers
-```bash
-sudo apt-get install -y \
-    firefox-esr \
-    chromium
-```
-
----
-
-## 🔧 System Tools
-
-### File Management
-```bash
-sudo apt-get install -y \
-    ranger nnn \
-    thunar nautilus
-```
-
-### Process Management
-```bash
-sudo apt-get install -y \
-    htop btop \
-    glances
-```
-
-### Notifications
-```bash
-sudo apt-get install -y \
-    dunst \
-    libnotify-bin
-```
-
----
-
-## 🎭 Optional Slutty Extras
-
-### Conky (System Monitor)
-```bash
-sudo apt-get install -y \
-    conky-all
-```
-
-*For creating cum-stained system info on your desktop*
-
-### Neofetch (System Info)
-```bash
-sudo apt-get install -y \
-    neofetch
-```
-
-*Show off your slutty system specs*
-
-### CMatrix (Terminal Effect)
-```bash
-sudo apt-get install -y \
-    cmatrix
-```
-
-*Matrix rain effect - looks cool with pink colors*
-
-### Fortune/Cowsay (Terminal Fun)
-```bash
-sudo apt-get install -y \
-    fortune-mod cowsay lolcat
-```
-
-*Slutty fortunes with colorful output*
-
----
-
-## 🚀 One-Line Install (All Packages)
+## 📦 Install Everything at Once
 
 ```bash
-# Copy and paste this entire block:
-sudo apt-get update && sudo apt-get install -y \
-    i3 i3-wm i3status i3lock dmenu \
+# Core packages
+sudo pacman -S --needed --noconfirm \
+    i3-wm i3-gaps i3status i3lock dmenu \
     picom nitrogen kitty rofi polybar \
-    gnome-shell gnome-terminal gnome-tweaks \
-    ffmpeg mpv mplayer vlc \
-    chafa caca-utils libcaca-dev \
-    zsh bash-completion powerline fonts-powerline \
-    feh sxiv imv \
-    ranger nnn thunar \
-    htop btop dunst libnotify-bin \
-    conky-all neofetch cmatrix \
+    dunst lxappearance \
+    ffmpeg mpv \
+    libcaca libsixel \
+    zsh zsh-completions \
+    feh imagemagick \
+    ranger thunar dolphin \
+    htop btop \
+    conky neofetch cmatrix \
     fortune-mod cowsay lolcat \
-    git curl wget
+    wmctrl xdotool xclip \
+    git curl wget \
+    noto-fonts noto-fonts-emoji \
+    ttf-nerd-fonts-symbols-mono \
+    ttf-font-awesome \
+    firefox chromium
+
+# AUR packages
+yay -S --needed --noconfirm cava
 ```
 
 ---
 
-## 📋 Post-Install Checklist
+## 🎨 Fonts (Essential!)
 
-After installing packages:
-
-1. **Set Zsh as default shell** (optional but slutty):
-   ```bash
-   chsh -s $(which zsh)
-   ```
-
-2. **Install Oh-My-Zsh** (for the full whorish prompt):
-   ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-   ```
-
-3. **Set up Tails Slut Desktop**:
-   ```bash
-   cd ~/TailsSlutDesktop
-   ./install.sh
-   ```
-
-4. **Choose your session at login:**
-   - Select **i3** for maximum degeneracy
-   - Select **GNOME** for standard experience
+| Package | Purpose |
+|---------|---------|
+| `noto-fonts` | Unicode font support |
+| `noto-fonts-emoji` | Emoji rendering |
+| `ttf-nerd-fonts-symbols-mono` | Icons and symbols |
+| `ttf-font-awesome` | More icons |
 
 ---
 
-## 🔒 Tails-Specific Notes
+## 🐚 Shell
 
-### Persistence Setup
-
-To save your slutty desktop settings across Tails sessions:
-
-1. **Enable persistence** in Tails:
-   - Applications → Tails → Configure persistent volume
-   - Enable: Dotfiles, APT Packages, APT Lists
-
-2. **Persist your configs**:
-   ```bash
-   # Add to your persistence:
-   ~/.config/i3/
-   ~/.config/picom/
-   ~/.config/kitty/
-   ~/.config/gtk-3.0/
-   ~/.zshrc
-   ~/.bashrc
-   ~/TailsSlutDesktop/
-   ```
-
-### Tor Browser Tips
-
-- Always use Tor Browser for adult sites on Tails
-- Enable HTTPS-Only Mode
-- Use uBlock Origin (pre-installed)
-- Clear cookies after each session
+| Package | Purpose |
+|---------|---------|
+| `zsh` | Better shell |
+| `zsh-completions` | Tab completion |
+| `bash` | Backup shell |
 
 ---
 
-## 🆘 Troubleshooting
+## 📁 File Managers
 
-### Picom/Transparency not working?
+| Package | Purpose |
+|---------|---------|
+| `ranger` | Terminal file manager |
+| `thunar` | GUI file manager |
+| `dolphin` | KDE file manager |
+
+---
+
+## 🎬 Media
+
+| Package | Purpose |
+|---------|---------|
+| `mpv` | Video player |
+| `ffmpeg` | Video converter |
+| `imagemagick` | Image tools |
+| `libcaca` | ASCII video output |
+| `libsixel` | Sixel graphics |
+
+---
+
+## 🎵 Fun Extras
+
+| Package | Purpose |
+|---------|---------|
+| `cava` | Terminal audio visualizer (AUR) |
+| `neofetch` | System info display |
+| `cmatrix` | Matrix rain effect |
+| `cowsay` | Talking cow |
+| `fortune-mod` | Random quotes |
+| `lolcat` | Rainbow text |
+
+---
+
+## 🌐 Browsers
+
+| Package | Purpose |
+|---------|---------|
+| `firefox` | Main browser |
+| `chromium` | Alternative |
+| `tor-browser` | For privacy (AUR: `tor-browser`) |
+
+---
+
+## 🔧 Utilities
+
+| Package | Purpose |
+|---------|---------|
+| `wmctrl` | Window control |
+| `xdotool` | Simulate input |
+| `xclip` | Clipboard access |
+| `htop` | Process viewer |
+| `btop` | Better process viewer |
+| `conky` | System monitor |
+
+---
+
+## 📦 AUR Packages (via yay)
+
 ```bash
-# Check if picom is running
-pgrep picom
+# Install yay first if not present
+git clone https://aur.archlinux.org/yay.git /tmp/yay
+cd /tmp/yay && makepkg -si
 
-# Start picom manually
-picom --config ~/.config/picom/picom-degenerate.conf -b
-
-# Check for errors
-picom --config ~/.config/picom/picom-degenerate.conf --verbose
+# Then install AUR packages
+yay -S cava                    # Terminal audio visualizer
+yay -S tor-browser            # Anonymous browsing
+yay -S lightdm-webkit2-theme-glorious  # Pretty login theme
 ```
 
-### i3 not starting?
-```bash
-# Check i3 is installed
-which i3
+---
 
-# Check X session
-ls /usr/share/xsessions/
+## 🔒 Privacy & Security
 
-# Try starting from TTY
-startx /usr/bin/i3
-```
-
-### Video player not working?
-```bash
-# Check video codecs
-ffmpeg -codecs | grep -i "hevc\|h264\|vp9"
-
-# Install additional codecs if needed
-sudo apt-get install ubuntu-restricted-extras
-```
+| Package | Purpose |
+|---------|---------|
+| `tor` | Tor proxy |
+| `torsocks` | Tor wrapper |
+| `proxychains-ng` | Proxy chains |
 
 ---
 
 ## 💋 Stay Filthy!
 
-All packages tested on Tails 6.0+
+Your EndeavourOS system is now a complete depraved workstation! 🔥
 
-For issues, check the GitHub repo or contact your slutty AI guide 💦
+**All packages installed with pacman/yay - No Debian/Tails compatibility needed!**

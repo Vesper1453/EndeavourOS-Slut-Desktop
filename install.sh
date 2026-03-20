@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 🍆💦 TAILS SLUT DESKTOP - ONE-CLICK INSTALLER 💋🔥
-# Works on Tails (Debian), Arch Linux, and EndeavourOS!
+# 🍆💦 ENDEAVOUROS SLUT DESKTOP - ONE-CLICK INSTALLER 💋🔥
+# For EndeavourOS and Arch Linux ONLY - No Debian/Tails support!
 
 set -e
 
@@ -13,55 +13,33 @@ HOT_PINK='\033[38;5;198m'
 RED='\033[38;5;196m'
 PURPLE='\033[38;5;93m'
 GREEN='\033[38;5;82m'
+YELLOW='\033[38;5;220m'
 RESET='\033[0m'
 
-# ===== DISTRO DETECTION =====
-detect_distro() {
+# ===== CHECK IF ENDEAVOUROS/ARCH =====
+check_distro() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         DISTRO=$ID
-        DISTRO_LIKE=$ID_LIKE
-        DISTRO_NAME=$NAME
     else
-        DISTRO="unknown"
-        DISTRO_NAME="Unknown Linux"
+        echo -e "${RED}❌ Cannot detect Linux distribution${RESET}"
+        exit 1
     fi
     
-    # Check if Arch-based (including EndeavourOS)
-    if [[ "$DISTRO" == "arch" ]] || [[ "$DISTRO" == "endeavouros" ]] || [[ "$DISTRO_LIKE" == *"arch"* ]]; then
-        IS_ARCH=true
-        PACKAGE_MANAGER="pacman"
-        INSTALL_CMD="sudo pacman -S --needed --noconfirm"
-        AUR_HELPER=""
-        
-        # Check for AUR helper
-        if command -v yay &> /dev/null; then
-            AUR_HELPER="yay"
-        elif command -v paru &> /dev/null; then
-            AUR_HELPER="paru"
-        fi
-        
-        if [[ "$DISTRO" == "endeavouros" ]]; then
-            echo -e "${PINK}🚀 EndeavourOS detected! Using pacman + yay...${RESET}"
-            # Auto-install yay if not present on EndeavourOS
-            if [ -z "$AUR_HELPER" ]; then
-                echo -e "${HOT_PINK}💋 Installing yay AUR helper for you...${RESET}"
-                sudo pacman -S --needed --noconfirm git base-devel
-                git clone https://aur.archlinux.org/yay.git /tmp/yay
-                cd /tmp/yay && makepkg -si --noconfirm
-                cd -
-                AUR_HELPER="yay"
-            fi
-        else
-            echo -e "${PINK}🏹 Arch Linux detected! Using pacman...${RESET}"
-        fi
+    # Only allow Arch-based distros
+    if [[ "$DISTRO" != "arch" ]] && [[ "$DISTRO" != "endeavouros" ]]; then
+        echo -e "${RED}❌ ERROR: This installer is for EndeavourOS/Arch Linux ONLY!${RESET}"
+        echo -e "${RED}   Your distro: $DISTRO${RESET}"
+        echo ""
+        echo -e "${YELLOW}💡 For Tails or Debian, use the legacy branch:${RESET}"
+        echo -e "${YELLOW}   git clone -b debian https://github.com/Vesper1453/TailsSlutDesktop.git${RESET}"
+        exit 1
+    fi
+    
+    if [[ "$DISTRO" == "endeavouros" ]]; then
+        echo -e "${PINK}🚀 EndeavourOS detected! Perfect for maximum depravity...${RESET}"
     else
-        IS_ARCH=false
-        PACKAGE_MANAGER="apt"
-        INSTALL_CMD="sudo apt-get install -y"
-        AUR_HELPER=""
-        
-        echo -e "${PINK}💋 Debian/Ubuntu/Tails detected! Using apt...${RESET}"
+        echo -e "${PINK}🏹 Arch Linux detected! Let's get slutty...${RESET}"
     fi
 }
 
@@ -71,10 +49,6 @@ detect_terminal() {
         TERMINAL="konsole"
         TERMINAL_CMD="konsole -e"
         echo -e "${PINK}💋 Konsole detected (KDE)!${RESET}"
-    elif command -v gnome-terminal &> /dev/null; then
-        TERMINAL="gnome-terminal"
-        TERMINAL_CMD="gnome-terminal -- bash -c"
-        echo -e "${PINK}💋 GNOME Terminal detected!${RESET}"
     elif command -v kitty &> /dev/null; then
         TERMINAL="kitty"
         TERMINAL_CMD="kitty -e"
@@ -83,22 +57,28 @@ detect_terminal() {
         TERMINAL="alacritty"
         TERMINAL_CMD="alacritty -e"
         echo -e "${PINK}💋 Alacritty detected!${RESET}"
+    elif command -v gnome-terminal &> /dev/null; then
+        TERMINAL="gnome-terminal"
+        TERMINAL_CMD="gnome-terminal -- bash -c"
+        echo -e "${YELLOW}⚠️  GNOME Terminal detected - installing Kitty instead${RESET}"
     else
         TERMINAL="xterm"
         TERMINAL_CMD="xterm -e"
-        echo -e "${PINK}⚠️  Falling back to xterm${RESET}"
+        echo -e "${YELLOW}⚠️  No good terminal found - will install Kitty${RESET}"
     fi
 }
 
-# Detect distro at start
-detect_distro
+# Detect at start
+check_distro
 detect_terminal
 
 echo -e "${PURPLE}"
 cat << 'EOF'
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║     🍆💦  TAILS SLUT DESKTOP INSTALLER  💋🔥                  ║
+║     🍆💦  ENDEAVOUROS SLUT DESKTOP INSTALLER  💋🔥            ║
+║                                                                ║
+║              For EndeavourOS & Arch Linux ONLY                ║
 ║                                                                ║
 ║     The most depraved Linux desktop experience ever...        ║
 ║                                                                ║
@@ -110,7 +90,7 @@ echo -e "${RESET}"
 show_menu() {
     echo -e "${HOT_PINK}Select installation option:${RESET}"
     echo ""
-    echo "  1) 🔥 FULL INSTALL (i3 + terminal + all packages)"
+    echo "  1) 🔥 FULL INSTALL (i3 + terminal + all packages + adult sites)"
     echo "  2) 🖥️  i3 Window Manager + all slutty features"
     echo "  3) 📟 Terminal Customization only"
     echo "  4) 📦 Install packages only"
@@ -137,29 +117,34 @@ show_menu() {
 }
 
 full_install() {
-    echo -e "${RED}🔥 FULL SLUTTY INSTALLATION STARTING...${RESET}"
+    echo -e "${RED}🔥 FULL ENDEAVOUROS SLUT INSTALLATION...${RESET}"
     install_packages
     install_i3
+    install_terminal
     install_panic_button
     install_video_viewer
-    install_gnome
+    create_adult_shortcuts
     
     echo ""
     echo -e "${GREEN}"
     cat << 'EOF'
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║           ✅ FULL INSTALLATION COMPLETE! ✅                    ║
+║     ✅ ENDEAVOUROS SLUT DESKTOP FULLY INSTALLED! ✅          ║
 ║                                                                ║
-║     Your slutty Tails desktop is ready for maximum filth!      ║
+║     Your system is now ready for maximum depravity!            ║
 ║                                                                ║
-║     Hotkeys:                                                   ║
-║       Alt+F1  = 🔥 Degenerate Mode                             ║
-║       Alt+F2  = 💦 Horny Mode                                  ║
-║       Alt+F3  = ✨ Normal Mode                                 ║
-║       Mod+Shift+Delete = 🚨 PANIC BUTTON                       ║
+║     Mode Hotkeys:                                              ║
+║       Alt+F1  = 🔥 Degenerate Mode (explicit AF)             ║
+║       Alt+F2  = 💦 Horny Mode (sensual & flirty)              ║
+║       Alt+F3  = ✨ Normal Mode (clean for mom visits)         ║
 ║                                                                ║
-║     Terminal video player: terminal-video-viewer.sh -h        ║
+║     Emergency:                                                 ║
+║       Mod+Shift+Delete = 🚨 PANIC BUTTON                     ║
+║                                                                ║
+║     17 adult site shortcuts on your Desktop!                   ║
+║                                                                ║
+║     Reboot and select i3 from the login menu!                  ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
 EOF
@@ -167,97 +152,64 @@ EOF
 }
 
 install_packages() {
-    echo -e "${HOT_PINK}📦 Installing all slutty packages for your distro...${RESET}"
-    
-    if [ "$IS_ARCH" = true ]; then
-        install_packages_arch
-    else
-        install_packages_debian
-    fi
-}
-
-install_packages_debian() {
-    echo -e "${PINK}📦 Using apt-get (Debian/Ubuntu/Tails)...${RESET}"
-    
-    sudo apt-get update
-    
-    # Core packages
-    sudo apt-get install -y \
-        i3 i3-wm i3status i3lock dmenu \
-        picom nitrogen kitty rofi polybar \
-        dunst gnome-terminal gnome-tweaks \
-        ffmpeg mpv mplayer vlc \
-        chafa caca-utils libcaca-dev \
-        zsh bash-completion \
-        feh sxiv \
-        ranger nnn thunar \
-        htop btop libnotify-bin \
-        conky-all neofetch cmatrix \
-        fortune-mod cowsay lolcat \
-        wmctrl xdotool xclip \
-        git curl wget 2>/dev/null || {
-        echo -e "${RED}⚠️  Some packages may have failed to install${RESET}"
-    }
-    
-    echo -e "${GREEN}✅ Debian packages installed!${RESET}"
-}
-
-install_packages_arch() {
-    echo -e "${PINK}📦 Using pacman (Arch/EndeavourOS)...${RESET}"
+    echo -e "${HOT_PINK}📦 Installing EndeavourOS packages...${RESET}"
     
     # Update pacman database
+    echo -e "${PINK}💋 Updating package database...${RESET}"
     sudo pacman -Sy
     
-    # Core packages (Arch names)
+    # Core packages
+    echo -e "${PINK}💋 Installing core packages...${RESET}"
     sudo pacman -S --needed --noconfirm \
         i3-wm i3status i3lock dmenu \
+        i3-gaps \
         picom nitrogen kitty rofi polybar \
         dunst lxappearance \
         ffmpeg mpv \
         libcaca libsixel \
         zsh zsh-completions \
         feh imagemagick \
-        ranger thunar \
+        ranger thunar dolphin \
         htop btop \
         conky neofetch cmatrix \
-        fortune-mod cowsay \
+        fortune-mod cowsay lolcat \
         wmctrl xdotool xclip \
         git curl wget \
         noto-fonts noto-fonts-emoji \
         ttf-nerd-fonts-symbols-mono \
         ttf-font-awesome \
+        firefox chromium \
         2>/dev/null || {
-        echo -e "${RED}⚠️  Some packages may have failed to install${RESET}"
+        echo -e "${RED}⚠️  Some packages may have failed${RESET}"
     }
     
-    # Install AUR packages if helper available
-    if [ -n "$AUR_HELPER" ]; then
-        echo -e "${HOT_PINK}💋 Installing AUR packages with $AUR_HELPER...${RESET}"
-        
-        if [ "$AUR_HELPER" = "yay" ]; then
-            yay -S --needed --noconfirm \
-                cava \
-                2>/dev/null || true
-        elif [ "$AUR_HELPER" = "paru" ]; then
-            paru -S --needed --noconfirm \
-                cava \
-                2>/dev/null || true
-        fi
-    else
-        echo -e "${PINK}⚠️  No AUR helper found (yay/paru). Some extra packages skipped.${RESET}"
-        echo -e "${PINK}   Install yay: git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si${RESET}"
+    # Install yay if not present
+    if ! command -v yay &> /dev/null; then
+        echo -e "${HOT_PINK}💋 Installing yay AUR helper...${RESET}"
+        sudo pacman -S --needed --noconfirm git base-devel
+        git clone https://aur.archlinux.org/yay.git /tmp/yay
+        cd /tmp/yay && makepkg -si --noconfirm
+        cd -
     fi
     
-    echo -e "${GREEN}✅ Arch packages installed!${RESET}"
+    # Install AUR packages
+    echo -e "${HOT_PINK}💋 Installing AUR packages...${RESET}"
+    yay -S --needed --noconfirm \
+        cava \
+        2>/dev/null || true
+    
+    echo -e "${GREEN}✅ Packages installed!${RESET}"
 }
 
 install_i3() {
     echo -e "${HOT_PINK}🖥️  Setting up i3 Window Manager...${RESET}"
     
-    # Create i3 config directory
+    # Create directories
     mkdir -p ~/.config/i3
     mkdir -p ~/.config/i3/scripts
     mkdir -p ~/.config/picom
+    mkdir -p ~/.config/dunst
+    mkdir -p ~/.config/rofi
     
     # Copy i3 configs
     cp "$SCRIPT_DIR/i3/config-degenerate" ~/.config/i3/config-degenerate
@@ -272,79 +224,21 @@ install_i3() {
     cp "$SCRIPT_DIR/picom/picom-degenerate.conf" ~/.config/picom/
     cp "$SCRIPT_DIR/picom/picom-horny.conf" ~/.config/picom/
     
+    # Copy dunst configs if they exist
+    if [ -f "$SCRIPT_DIR/dunst/dunst-degenerate.conf" ]; then
+        cp "$SCRIPT_DIR/dunst"/*.conf ~/.config/dunst/ 2>/dev/null || true
+    fi
+    
+    # Copy rofi themes if they exist
+    if [ -d "$SCRIPT_DIR/rofi" ]; then
+        cp "$SCRIPT_DIR/rofi"/*.rasi ~/.config/rofi/ 2>/dev/null || true
+    fi
+    
     # Set default to normal
     cp ~/.config/i3/config-normal ~/.config/i3/config
     
-    # Create i3 session desktop entry if it doesn't exist
-    if [ ! -f /usr/share/xsessions/i3.desktop ]; then
-        echo -e "${PINK}Note: Select i3 from the session menu at login${RESET}"
-    fi
-    
     echo -e "${GREEN}✅ i3 configured!${RESET}"
-    echo -e "${PINK}   Run 'startx i3' or select i3 from the login session menu${RESET}"
-}
-
-install_gnome() {
-    echo -e "${HOT_PINK}🎨 Setting up GNOME/GTK themes...${RESET}"
-    
-    # Run the original setup script
-    "$SCRIPT_DIR/scripts/setup.sh"
-    
-    echo -e "${GREEN}✅ GNOME themes configured!${RESET}"
-}
-
-install_panic_button() {
-    echo -e "${RED}🚨 Installing Panic Button...${RESET}"
-    
-    # Copy panic button to i3 scripts
-    mkdir -p ~/.config/i3/scripts
-    cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/.config/i3/scripts/panic-button
-    chmod +x ~/.config/i3/scripts/panic-button
-    
-    # Copy to main scripts
-    cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/panic-button.sh
-    chmod +x ~/panic-button.sh
-    
-    # Create desktop shortcut with proper terminal command
-    echo "[Desktop Entry]" > ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Name=🚨 PANIC BUTTON" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Comment=Emergency wipe - hides all evidence instantly" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Exec=$TERMINAL_CMD ~/.config/i3/scripts/panic-button" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Type=Application" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Terminal=false" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Icon=dialog-error" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Categories=System;Security;" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    chmod +x ~/Desktop/🚨-PANIC-BUTTON.desktop
-    
-    echo -e "${GREEN}✅ Panic button installed!${RESET}"
-    echo -e "${PINK}   Hotkey: Mod+Shift+Delete (in i3)${RESET}"
-    echo -e "${PINK}   Desktop: 🚨-PANIC-BUTTON.desktop${RESET}"
-}
-
-install_video_viewer() {
-    echo -e "${HOT_PINK}🎬 Installing Terminal Video Viewer...${RESET}"
-    
-    # Copy video viewer
-    cp "$SCRIPT_DIR/scripts/terminal-video-viewer.sh" ~/terminal-video.sh
-    chmod +x ~/terminal-video.sh
-    
-    # Create symlink
-    ln -sf ~/terminal-video.sh ~/.local/bin/terminal-video 2>/dev/null || true
-    
-    # Create desktop shortcut with proper terminal command
-    echo "[Desktop Entry]" > ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Name=🎬 Terminal Video Player" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Comment=Watch videos in ASCII/Sixel in the terminal" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Exec=$TERMINAL_CMD ~/terminal-video.sh --help" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Type=Application" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Terminal=false" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Icon=video-x-generic" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Categories=AudioVideo;Player;" >> ~/Desktop/🎬-Terminal-Video.desktop
-    chmod +x ~/Desktop/🎬-Terminal-Video.desktop
-    
-    echo -e "${GREEN}✅ Terminal video viewer installed!${RESET}"
-    echo -e "${PINK}   Usage: ~/terminal-video.sh -a video.mp4${RESET}"
-    echo -e "${PINK}   Modes: -a (ASCII), -s (Sixel), -c (libcaca)${RESET}"
+    echo -e "${PINK}   Logout and select 'i3' from the login menu${RESET}"
 }
 
 install_terminal() {
@@ -354,89 +248,99 @@ install_terminal() {
     mkdir -p ~/.config/slutterminal
     mkdir -p ~/.config/kitty
     mkdir -p ~/.config/kitty/scripts
+    mkdir -p ~/.local/share/konsole
     
-    # Copy Kitty configs
+    # Install Kitty configs
     if [ -d "$SCRIPT_DIR/terminal/kitty" ]; then
-        echo -e "${PINK}💋 Installing Kitty terminal configs...${RESET}"
+        echo -e "${PINK}💋 Installing Kitty configs...${RESET}"
         cp "$SCRIPT_DIR/terminal/kitty"/*.conf ~/.config/kitty/
-        
-        # Copy switch script
         cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/.config/kitty/scripts/switch-mode
         chmod +x ~/.config/kitty/scripts/switch-mode
-        
-        # Set default to normal
         cp ~/.config/kitty/kitty-normal.conf ~/.config/kitty/kitty.conf
-        
-        echo -e "${GREEN}✅ Kitty configured!${RESET}"
     fi
     
-    # Copy Konsole color schemes
+    # Install Konsole color schemes
     if [ -d "$SCRIPT_DIR/terminal/konsole" ]; then
         echo -e "${PINK}💋 Installing Konsole color schemes...${RESET}"
-        mkdir -p ~/.local/share/konsole
         cp "$SCRIPT_DIR/terminal/konsole"/*.colorscheme ~/.local/share/konsole/
-        echo -e "${GREEN}✅ Konsole color schemes installed!${RESET}"
-        echo -e "${PINK}   Apply in Konsole: Settings > Edit Current Profile > Appearance${RESET}"
     fi
     
-    # Copy Bash prompts
+    # Install Bash prompts
     if [ -d "$SCRIPT_DIR/terminal/bash" ]; then
         echo -e "${PINK}💋 Installing Bash prompts...${RESET}"
         cp "$SCRIPT_DIR/terminal/bash"/*.sh ~/.config/slutterminal/
-        
-        # Set default to normal
         cp ~/.config/slutterminal/bash-normal.sh ~/.config/slutterminal/bash-current.sh
         
-        # Add to .bashrc if not already there
+        # Add to .bashrc
         if ! grep -q "slutterminal/bash-current.sh" ~/.bashrc 2>/dev/null; then
             echo "" >> ~/.bashrc
-            echo "# Slutty Terminal Prompt" >> ~/.bashrc
+            echo "# 🍆💦 Slutty Terminal Prompt 💋🔥" >> ~/.bashrc
             echo "source ~/.config/slutterminal/bash-current.sh" >> ~/.bashrc
         fi
-        
-        echo -e "${GREEN}✅ Bash prompts installed!${RESET}"
     fi
     
-    # Copy Zsh prompts
+    # Install Zsh prompts
     if [ -d "$SCRIPT_DIR/terminal/zsh" ]; then
         echo -e "${PINK}💋 Installing Zsh prompts...${RESET}"
         cp "$SCRIPT_DIR/terminal/zsh"/*.zsh ~/.config/slutterminal/
-        
-        # Set default to normal
         cp ~/.config/slutterminal/zsh-normal.zsh ~/.config/slutterminal/zsh-current.zsh
         
-        # Add to .zshrc if not already there
+        # Add to .zshrc
         if [ -f ~/.zshrc ] && ! grep -q "slutterminal/zsh-current.zsh" ~/.zshrc 2>/dev/null; then
             echo "" >> ~/.zshrc
-            echo "# Slutty Terminal Prompt" >> ~/.zshrc
+            echo "# 🍆💦 Slutty Terminal Prompt 💋🔥" >> ~/.zshrc
             echo "source ~/.config/slutterminal/zsh-current.zsh" >> ~/.zshrc
         fi
-        
-        echo -e "${GREEN}✅ Zsh prompts installed!${RESET}"
     fi
     
-    # Copy terminal switcher
+    # Copy terminal switcher to home
     cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/terminal-switcher.sh
     chmod +x ~/terminal-switcher.sh
     
-    echo ""
-    echo -e "${GREEN}"
-    cat << 'EOF'
-╔════════════════════════════════════════════════════════════════╗
-║                                                                ║
-║           ✅ TERMINAL CUSTOMIZATION COMPLETE! ✅             ║
-║                                                                ║
-║  Switch terminal modes with:                                   ║
-║    ~/terminal-switcher.sh [degenerate|horny|normal]            ║
-║                                                                ║
-║  Or use keyboard shortcuts (in Kitty):                         ║
-║    Ctrl+Shift+F1 = 🔥 Degenerate Mode                           ║
-║    Ctrl+Shift+F2 = 💦 Horny Mode                               ║
-║    Ctrl+Shift+F3 = ✨ Normal Mode                              ║
-║                                                                ║
-╚════════════════════════════════════════════════════════════════╝
-EOF
-    echo -e "${RESET}"
+    echo -e "${GREEN}✅ Terminal customized!${RESET}"
+    echo -e "${PINK}   Switch modes: ~/terminal-switcher.sh [degenerate|horny|normal]${RESET}"
+}
+
+install_panic_button() {
+    echo -e "${RED}🚨 Installing Panic Button...${RESET}"
+    
+    mkdir -p ~/.config/i3/scripts
+    cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/.config/i3/scripts/panic-button
+    chmod +x ~/.config/i3/scripts/panic-button
+    cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/panic-button.sh
+    chmod +x ~/panic-button.sh
+    
+    # Create desktop shortcut
+    echo "[Desktop Entry]" > ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Name=🚨 PANIC BUTTON" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Comment=Emergency wipe - hides all evidence" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Exec=$TERMINAL_CMD ~/.config/i3/scripts/panic-button" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Type=Application" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Terminal=false" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Icon=dialog-error" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    chmod +x ~/Desktop/🚨-PANIC-BUTTON.desktop
+    
+    echo -e "${GREEN}✅ Panic button installed!${RESET}"
+}
+
+install_video_viewer() {
+    echo -e "${HOT_PINK}🎬 Installing Terminal Video Viewer...${RESET}"
+    
+    cp "$SCRIPT_DIR/scripts/terminal-video-viewer.sh" ~/terminal-video.sh
+    chmod +x ~/terminal-video.sh
+    mkdir -p ~/.local/bin
+    ln -sf ~/terminal-video.sh ~/.local/bin/terminal-video 2>/dev/null || true
+    
+    echo "[Desktop Entry]" > ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Name=🎬 Terminal Video" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Comment=Watch videos in terminal (ASCII/Sixel)" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Exec=$TERMINAL_CMD ~/terminal-video.sh --help" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Type=Application" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Terminal=false" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Icon=video-x-generic" >> ~/Desktop/🎬-Terminal-Video.desktop
+    chmod +x ~/Desktop/🎬-Terminal-Video.desktop
+    
+    echo -e "${GREEN}✅ Video viewer installed!${RESET}"
 }
 
 show_packages() {
@@ -444,53 +348,38 @@ show_packages() {
 }
 
 create_adult_shortcuts() {
-    echo -e "${RED}🍆💦 Creating Adult Sites Desktop Shortcuts... 💋🔥${RESET}"
+    echo -e "${RED}🍆💦 Creating Adult Site Shortcuts... 💋🔥${RESET}"
     
     mkdir -p ~/Desktop
     
-    # Mainstream Porn Sites
-    echo -e "${HOT_PINK}📁 Creating mainstream porn shortcuts...${RESET}"
+    # Mainstream Porn
+    create_shortcut "🔞-Pornhub" "https://pornhub.com"
+    create_shortcut "🔞-Xvideos" "https://xvideos.com"
+    create_shortcut "🔞-Xnxx" "https://xnxx.com"
+    create_shortcut "🔞-Redtube" "https://redtube.com"
+    create_shortcut "🔞-Youporn" "https://youporn.com"
+    create_shortcut "🔞-Tube8" "https://tube8.com"
+    create_shortcut "🔞-Spankbang" "https://spankbang.com"
+    create_shortcut "🔞-xHamster" "https://xhamster.com"
     
-    create_shortcut "🔞-Pornhub" "https://pornhub.com" "video-x-generic"
-    create_shortcut "🔞-Xvideos" "https://xvideos.com" "video-x-generic"
-    create_shortcut "🔞-Xnxx" "https://xnxx.com" "video-x-generic"
-    create_shortcut "🔞-Redtube" "https://redtube.com" "video-x-generic"
-    create_shortcut "🔞-Youporn" "https://youporn.com" "video-x-generic"
-    create_shortcut "🔞-Tube8" "https://tube8.com" "video-x-generic"
-    create_shortcut "🔞-Spankbang" "https://spankbang.com" "video-x-generic"
-    create_shortcut "🔞-xHamster" "https://xhamster.com" "video-x-generic"
+    # Cam Sites
+    create_shortcut "🎥-Chaturbate" "https://chaturbate.com"
+    create_shortcut "🎥-CamSoda" "https://camsoda.com"
+    create_shortcut "🎥-Stripchat" "https://stripchat.com"
+    create_shortcut "🎥-BongaCams" "https://bongacams.com"
+    create_shortcut "🎥-MyFreeCams" "https://myfreecams.com"
+    create_shortcut "🎥-JerkMate" "https://jerkmate.com"
     
-    # Cam/OnlyFans Sites
-    echo -e "${HOT_PINK}📁 Creating cam site shortcuts...${RESET}"
+    # Hentai
+    create_shortcut "🦊-HentaiHaven" "https://hentaihaven.org"
+    create_shortcut "🦊-Rule34" "https://rule34.xxx"
     
-    create_shortcut "🎥-Chaturbate" "https://chaturbate.com" "camera-video"
-    create_shortcut "🎥-CamSoda" "https://camsoda.com" "camera-video"
-    create_shortcut "🎥-Stripchat" "https://stripchat.com" "camera-video"
-    create_shortcut "🎥-BongaCams" "https://bongacams.com" "camera-video"
-    create_shortcut "🎥-MyFreeCams" "https://myfreecams.com" "camera-video"
-    create_shortcut "🎥-JerkMate" "https://jerkmate.com" "camera-video"
-    
-    # Hentai/Rule34 Sites
-    echo -e "${HOT_PINK}📁 Creating hentai shortcuts...${RESET}"
-    
-    create_shortcut "🦊-HentaiHaven" "https://hentaihaven.org" "image-x-generic"
-    create_shortcut "🦊-Rule34" "https://rule34.xxx" "image-x-generic"
-    create_shortcut "🦊-E621" "https://e621.net" "image-x-generic"
-    create_shortcut "🦊-Gelbooru" "https://gelbooru.com" "image-x-generic"
-    create_shortcut "🦊-Danbooru" "https://danbooru.donmai.us" "image-x-generic"
-    create_shortcut "🦊-E-Hentai" "https://e-hentai.org" "image-x-generic"
-    
-    echo ""
-    echo -e "${GREEN}✅ Adult sites shortcuts created!${RESET}"
-    echo -e "${PINK}   Location: ~/Desktop/${RESET}"
-    echo -e "${PINK}   Total: 17 shortcuts${RESET}"
+    echo -e "${GREEN}✅ 17 adult site shortcuts created!${RESET}"
 }
 
-# Helper function to create individual shortcut
 create_shortcut() {
     local name=$1
     local url=$2
-    local icon=$3
     
     echo "[Desktop Entry]" > ~/Desktop/${name}.desktop
     echo "Name=${name}" >> ~/Desktop/${name}.desktop
@@ -498,12 +387,11 @@ create_shortcut() {
     echo "Exec=firefox ${url}" >> ~/Desktop/${name}.desktop
     echo "Type=Application" >> ~/Desktop/${name}.desktop
     echo "Terminal=false" >> ~/Desktop/${name}.desktop
-    echo "Icon=${icon}" >> ~/Desktop/${name}.desktop
-    echo "Categories=AudioVideo;" >> ~/Desktop/${name}.desktop
+    echo "Icon=firefox" >> ~/Desktop/${name}.desktop
     chmod +x ~/Desktop/${name}.desktop
 }
 
-# Check if running with arguments
+# Command line arguments
 if [ -n "$1" ]; then
     case "$1" in
         --full) full_install ;;
