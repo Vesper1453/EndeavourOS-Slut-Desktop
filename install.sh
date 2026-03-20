@@ -65,8 +65,34 @@ detect_distro() {
     fi
 }
 
+# ===== TERMINAL DETECTION =====
+detect_terminal() {
+    if command -v konsole &> /dev/null; then
+        TERMINAL="konsole"
+        TERMINAL_CMD="konsole -e"
+        echo -e "${PINK}💋 Konsole detected (KDE)!${RESET}"
+    elif command -v gnome-terminal &> /dev/null; then
+        TERMINAL="gnome-terminal"
+        TERMINAL_CMD="gnome-terminal -- bash -c"
+        echo -e "${PINK}💋 GNOME Terminal detected!${RESET}"
+    elif command -v kitty &> /dev/null; then
+        TERMINAL="kitty"
+        TERMINAL_CMD="kitty -e"
+        echo -e "${PINK}💋 Kitty terminal detected!${RESET}"
+    elif command -v alacritty &> /dev/null; then
+        TERMINAL="alacritty"
+        TERMINAL_CMD="alacritty -e"
+        echo -e "${PINK}💋 Alacritty detected!${RESET}"
+    else
+        TERMINAL="xterm"
+        TERMINAL_CMD="xterm -e"
+        echo -e "${PINK}⚠️  Falling back to xterm${RESET}"
+    fi
+}
+
 # Detect distro at start
 detect_distro
+detect_terminal
 
 echo -e "${PURPLE}"
 cat << 'EOF'
@@ -277,17 +303,15 @@ install_panic_button() {
     cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/panic-button.sh
     chmod +x ~/panic-button.sh
     
-    # Create desktop shortcut
-    cat > ~/Desktop/🚨-PANIC-BUTTON.desktop << 'EOF'
-[Desktop Entry]
-Name=🚨 PANIC BUTTON
-Comment=Emergency wipe - hides all evidence instantly
-Exec=gnome-terminal -- bash -c "~/.config/i3/scripts/panic-button; read -p 'Press Enter...'"
-Type=Application
-Terminal=false
-Icon=dialog-error
-Categories=System;Security;
-EOF
+    # Create desktop shortcut with proper terminal command
+    echo "[Desktop Entry]" > ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Name=🚨 PANIC BUTTON" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Comment=Emergency wipe - hides all evidence instantly" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Exec=$TERMINAL_CMD ~/.config/i3/scripts/panic-button" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Type=Application" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Terminal=false" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Icon=dialog-error" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    echo "Categories=System;Security;" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
     chmod +x ~/Desktop/🚨-PANIC-BUTTON.desktop
     
     echo -e "${GREEN}✅ Panic button installed!${RESET}"
@@ -305,17 +329,15 @@ install_video_viewer() {
     # Create symlink
     ln -sf ~/terminal-video.sh ~/.local/bin/terminal-video 2>/dev/null || true
     
-    # Create desktop shortcut
-    cat > ~/Desktop/🎬-Terminal-Video.desktop << 'EOF'
-[Desktop Entry]
-Name=🎬 Terminal Video Player
-Comment=Watch videos in ASCII/Sixel in the terminal
-Exec=gnome-terminal -- bash -c "~/terminal-video.sh --help; read -p 'Press Enter...'"
-Type=Application
-Terminal=false
-Icon=video-x-generic
-Categories=AudioVideo;Player;
-EOF
+    # Create desktop shortcut with proper terminal command
+    echo "[Desktop Entry]" > ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Name=🎬 Terminal Video Player" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Comment=Watch videos in ASCII/Sixel in the terminal" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Exec=$TERMINAL_CMD ~/terminal-video.sh --help" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Type=Application" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Terminal=false" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Icon=video-x-generic" >> ~/Desktop/🎬-Terminal-Video.desktop
+    echo "Categories=AudioVideo;Player;" >> ~/Desktop/🎬-Terminal-Video.desktop
     chmod +x ~/Desktop/🎬-Terminal-Video.desktop
     
     echo -e "${GREEN}✅ Terminal video viewer installed!${RESET}"
