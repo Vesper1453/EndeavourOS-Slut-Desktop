@@ -201,6 +201,59 @@ install_packages() {
     echo -e "${GREEN}✅ Packages installed!${RESET}"
 }
 
+install_packages_arch() {
+    echo -e "${PINK}📦 Using pacman (Arch/EndeavourOS)...${RESET}"
+    
+    # Update pacman database
+    sudo pacman -Sy
+    
+    # Core packages (install one by one to see which fail)
+    CORE_PACKAGES=(
+        kdialog konsole zsh git curl wget
+        feh nitrogen picom rofi neofetch cowsay fortune-mod cmatrix
+        htop btop ranger mpv ffmpeg chafa libcaca imagemagick
+        xdotool wmctrl libnotify dunst polybar conky
+        kitty alacritty noto-fonts noto-fonts-emoji
+        ttf-nerd-fonts-symbols-mono ttf-font-awesome
+    )
+    
+    INSTALLED=()
+    FAILED=()
+    
+    for pkg in "${CORE_PACKAGES[@]}"; do
+        echo -e "${PINK}💋 Installing $pkg...${RESET}"
+        if sudo pacman -S --needed --noconfirm "$pkg" 2>/dev/null; then
+            INSTALLED+=("$pkg")
+            echo -e "${GREEN}✅ $pkg installed${RESET}"
+        else
+            FAILED+=("$pkg")
+            echo -e "${RED}❌ $pkg failed (might be AUR)${RESET}"
+        fi
+    done
+    
+    echo ""
+    echo -e "${GREEN}✅ Installed: ${#INSTALLED[@]} packages${RESET}"
+    
+    if [ ${#FAILED[@]} -gt 0 ]; then
+        echo -e "${RED}❌ Failed: ${#FAILED[@]} packages${RESET}"
+        echo -e "${PINK}Run: bash fix-packages.sh to retry${RESET}"
+    fi
+    
+    # Install AUR packages if helper available
+    if [ -n "$AUR_HELPER" ] && [ ${#FAILED[@]} -gt 0 ]; then
+        echo -e "${HOT_PINK}💋 Trying AUR for failed packages...${RESET}"
+        
+        # Try each failed package via AUR
+        for pkg in "${FAILED[@]}"; do
+            if $AUR_HELPER -S --needed --noconfirm "$pkg" 2>/dev/null; then
+                echo -e "${GREEN}✅ $pkg installed via AUR${RESET}"
+            fi
+        done
+    fi
+    
+    echo -e "${GREEN}✅ Package installation complete!${RESET}"
+}
+
 install_kde_themes() {
     echo -e "${HOT_PINK}🎨 Installing KDE Plasma color schemes...${RESET}"
     
