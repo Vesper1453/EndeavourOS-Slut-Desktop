@@ -273,50 +273,184 @@ EOF
 }
 
 install_terminal() {
-    echo -e "${HOT_PINK}📟 Installing terminal customization...${RESET}"
+    echo -e "${HOT_PINK}📟 Installing slutty terminal customization...${RESET}"
     
-    # Install for Konsole (KDE's default)
+    # Set zsh as default shell
+    echo -e "${PINK}💋 Setting zsh as default shell...${RESET}"
+    chsh -s $(which zsh) $(whoami) 2>/dev/null || {
+        echo -e "${PINK}⚠️  Could not change default shell automatically${RESET}"
+        echo -e "${PINK}   Run: chsh -s /bin/zsh${RESET}"
+    }
+    
+    # Install required packages
+    echo -e "${PINK}💋 Installing terminal packages...${RESET}"
+    sudo pacman -S --needed --noconfirm zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions kitty lolcat cowsay fortune-mod neofetch bat exa 2>/dev/null || true
+    
+    # Create directories
+    mkdir -p ~/.config/slutterminal/{zsh,bash,kitty,konsole}
     mkdir -p ~/.local/share/konsole
+    mkdir -p ~/.local/share/color-schemes
     
-    # Copy Konsole color schemes
-    cp "$SCRIPT_DIR/terminal/konsole/DegenerateSlut.colorscheme" ~/.local/share/konsole/ 2>/dev/null || true
-    cp "$SCRIPT_DIR/terminal/konsole/HornySlut.colorscheme" ~/.local/share/konsole/ 2>/dev/null || true
-    cp "$SCRIPT_DIR/terminal/konsole/NormalClean.colorscheme" ~/.local/share/konsole/ 2>/dev/null || true
-    
-    # Create Konsole profile with slutty settings
-    mkdir -p ~/.config/konsolerc
-    
-    # Install bash configs
-    mkdir -p ~/.config/slutterminal/bash
-    cp "$SCRIPT_DIR/terminal/bash/bash-degenerate.sh" ~/.config/slutterminal/bash/
-    cp "$SCRIPT_DIR/terminal/bash/bash-horny.sh" ~/.config/slutterminal/bash/
-    cp "$SCRIPT_DIR/terminal/bash/bash-normal.sh" ~/.config/slutterminal/bash/
-    
-    # Install zsh configs
-    mkdir -p ~/.config/slutterminal/zsh
+    # Copy zsh configs
+    echo -e "${PINK}💋 Installing zsh configs...${RESET}"
     cp "$SCRIPT_DIR/terminal/zsh/zsh-degenerate.zsh" ~/.config/slutterminal/zsh/
     cp "$SCRIPT_DIR/terminal/zsh/zsh-horny.zsh" ~/.config/slutterminal/zsh/
     cp "$SCRIPT_DIR/terminal/zsh/zsh-normal.zsh" ~/.config/slutterminal/zsh/
     
-    # Install terminal switcher
-    cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/terminal-switcher.sh
-    chmod +x ~/terminal-switcher.sh
+    # Create master zshrc switcher
+    cat > ~/.config/slutterminal/zsh/zsh-switcher.sh << 'ZSHEND'
+#!/bin/bash
+MODE=$1
+case "$MODE" in
+    degenerate|d|1)
+        source ~/.config/slutterminal/zsh/zsh-degenerate.zsh
+        echo "🍆 Zsh set to DEGENERATE mode!"
+        ;;
+    horny|h|2)
+        source ~/.config/slutterminal/zsh/zsh-horny.zsh
+        echo "💋 Zsh set to HORNY mode!"
+        ;;
+    normal|n|3)
+        source ~/.config/slutterminal/zsh/zsh-normal.zsh
+        echo "✨ Zsh set to NORMAL mode!"
+        ;;
+    *)
+        echo "Usage: source ~/.config/slutterminal/zsh/zsh-switcher.sh [degenerate|horny|normal]"
+        ;;
+esac
+ZSHEND
+    chmod +x ~/.config/slutterminal/zsh/zsh-switcher.sh
     
-    # Add to shell rc files if not already present
-    if ! grep -q "slutterminal" ~/.bashrc 2>/dev/null; then
-        echo "" >> ~/.bashrc
-        echo "# 🍆💦 Slut Terminal Config 💋🔥" >> ~/.bashrc
-        echo "source ~/.config/slutterminal/bash/bash-degenerate.sh" >> ~/.bashrc
+    # Backup and create new .zshrc
+    if [ -f ~/.zshrc ]; then
+        cp ~/.zshrc ~/.zshrc.backup.$(date +%Y%m%d) 2>/dev/null || true
     fi
     
-    if [ -f ~/.zshrc ] && ! grep -q "slutterminal" ~/.zshrc 2>/dev/null; then
-        echo "" >> ~/.zshrc
-        echo "# 🍆💦 Slut Terminal Config 💋🔥" >> ~/.zshrc
-        echo "source ~/.config/slutterminal/zsh/zsh-degenerate.zsh" >> ~/.zshrc
-    fi
+    # Create slutty .zshrc
+    cat > ~/.zshrc << 'ZSHRC'
+# 🍆💦 SLUTTY ZSH CONFIG 💋🔥
+# Default: DEGENERATE MODE (maximum filth!)
+
+# Source the mode switcher
+source ~/.config/slutterminal/zsh/zsh-degenerate.zsh
+
+# You can switch modes by running:
+# source ~/.config/slutterminal/zsh/zsh-switcher.sh horny
+# source ~/.config/slutterminal/zsh/zsh-switcher.sh normal
+
+# Or use these aliases (defined in the mode files):
+# degenerate  - Switch to 🔥 mode
+# horny       - Switch to 💦 mode  
+# normal      - Switch to ✨ mode
+ZSHRC
     
-    echo -e "${GREEN}✅ Terminal customization installed!${RESET}"
-    echo -e "${PINK}   Run: ~/terminal-switcher.sh <mode> to switch${RESET}"
+    # Copy Konsole color schemes
+    echo -e "${PINK}💋 Installing Konsole themes...${RESET}"
+    cp "$SCRIPT_DIR/terminal/konsole/DegenerateSlut.colorscheme" ~/.local/share/konsole/
+    cp "$SCRIPT_DIR/terminal/konsole/HornySlut.colorscheme" ~/.local/share/konsole/
+    cp "$SCRIPT_DIR/terminal/konsole/NormalClean.colorscheme" ~/.local/share/konsole/
+    
+    # Copy Konsole profiles
+    cp "$SCRIPT_DIR/terminal/konsole/DegenerateSlut.profile" ~/.local/share/konsole/
+    cp "$SCRIPT_DIR/terminal/konsole/HornySlut.profile" ~/.local/share/konsole/
+    cp "$SCRIPT_DIR/terminal/konsole/NormalClean.profile" ~/.local/share/konsole/
+    
+    # Create konsole mode switcher
+    cat > ~/.config/slutterminal/konsole-switch.sh << 'KONSOLE'
+#!/bin/bash
+MODE=$1
+PROFILE=""
+
+case "$MODE" in
+    degenerate|d|1)
+        PROFILE="DegenerateSlut"
+        ;;
+    horny|h|2)
+        PROFILE="HornySlut"
+        ;;
+    normal|n|3)
+        PROFILE="NormalClean"
+        ;;
+    *)
+        echo "Usage: konsole-switch.sh [degenerate|horny|normal]"
+        exit 1
+        ;;
+esac
+
+# Launch new konsole with profile
+konsole -p "profile=$PROFILE" &
+echo "💦 Konsole launched with $PROFILE theme"
+KONSOLE
+    chmod +x ~/.config/slutterminal/konsole-switch.sh
+    
+    # Install Kitty configs
+    mkdir -p ~/.config/kitty
+    cp "$SCRIPT_DIR/terminal/kitty/kitty-degenerate.conf" ~/.config/kitty/
+    cp "$SCRIPT_DIR/terminal/kitty/kitty-horny.conf" ~/.config/kitty/
+    cp "$SCRIPT_DIR/terminal/kitty/kitty-normal.conf" ~/.config/kitty/
+    
+    # Install transparency controls
+    echo -e "${PINK}💋 Installing transparency controls...${RESET}"
+    cp "$SCRIPT_DIR/kde/scripts/transparency-hotkeys.sh" ~/transparency-hotkeys.sh
+    chmod +x ~/transparency-hotkeys.sh
+    
+    cp "$SCRIPT_DIR/kde/scripts/transparency-control.sh" ~/transparency-control.sh
+    chmod +x ~/transparency-control.sh
+    
+    # Create transparency desktop shortcuts
+    mkdir -p ~/Desktop
+    
+    for level in 0 25 50 75 85 100; do
+        local name desc emoji
+        case $level in
+            0) name="Opaque"; desc="No transparency"; emoji="🔒" ;;
+            25) name="Light"; desc="Light see-through"; emoji="👀" ;;
+            50) name="Medium"; desc="Half transparent"; emoji="💧" ;;
+            75) name="Heavy"; desc="Very see-through"; emoji="💦" ;;
+            85) name="Degenerate"; desc="Maximum filth"; emoji="🔥" ;;
+            100) name="Ghost"; desc="Almost invisible"; emoji="👻" ;;
+        esac
+        
+        cat > ~/Desktop/${emoji}-TRANSPARENCY-${name}.desktop << DESKTOP
+[Desktop Entry]
+Name=${emoji} Transparency: ${name} (${level}%)
+Comment=${desc}
+Exec=bash -c "~/transparency-hotkeys.sh $level"
+Type=Application
+Terminal=false
+Icon=preferences-desktop-theme
+DESKTOP
+        chmod +x ~/Desktop/${emoji}-TRANSPARENCY-${name}.desktop
+    done
+    
+    # Create transparency adjusters
+    cat > ~/Desktop/⬆️-More-Transparent.desktop << 'DESKTOP'
+[Desktop Entry]
+Name=⬆️ More Transparent (+10%)
+Comment=Increase window transparency
+Exec=bash -c "~/transparency-hotkeys.sh up"
+Type=Application
+Terminal=false
+Icon=go-up
+DESKTOP
+    chmod +x ~/Desktop/⬆️-More-Transparent.desktop
+    
+    cat > ~/Desktop/⬇️-Less-Transparent.desktop << 'DESKTOP'
+[Desktop Entry]
+Name=⬇️ Less Transparent (-10%)
+Comment=Decrease window transparency
+Exec=bash -c "~/transparency-hotkeys.sh down"
+Type=Application
+Terminal=false
+Icon=go-down
+DESKTOP
+    chmod +x ~/Desktop/⬇️-Less-Transparent.desktop
+    
+    echo -e "${GREEN}✅ Terminal customization complete!${RESET}"
+    echo -e "${PINK}   Default shell changed to ZSH (log out/in to apply)${RESET}"
+    echo -e "${PINK}   Konsole profiles: DegenerateSlut, HornySlut, NormalClean${RESET}"
+    echo -e "${PINK}   Transparency: ~/transparency-hotkeys.sh <0-100>${RESET}"
+    echo -e "${PINK}   ZSH modes: source ~/.config/slutterminal/zsh/zsh-switcher.sh [degenerate|horny|normal]${RESET}"
 }
 
 install_wallpapers() {

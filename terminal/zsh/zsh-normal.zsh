@@ -1,79 +1,131 @@
 #!/bin/zsh
 
-# ✨ NORMAL ZSH PROMPT - CLEAN & PROFESSIONAL 🖥️
-# Source from ~/.zshrc: source ~/.config/slutterminal/zsh-normal.zsh
+# ✨ NORMAL ZSH CONFIG - CLEAN & PROFESSIONAL 🖥️
+# Source this in ~/.zshrc: source ~/.config/slutterminal/zsh/zsh-normal.zsh
 
-# Load colors
+# Load required modules
 autoload -U colors && colors
+autoload -U compinit && compinit
+autoload -U promptinit && promptinit
 setopt promptsubst
 
-# Colors
-normal_gray='%F{245}'
-normal_blue='%F{75}'
-normal_green='%F{82}'
-normal_yellow='%F{226}'
-normal_red='%F{196}'
-reset='%f'
+# ============================================
+# 🎨 NORMAL COLORS (Clean Grays/Blues)
+# ============================================
+NORMAL_GRAY='%F{245}'
+NORMAL_BLUE='%F{75}'
+NORMAL_CYAN='%F{87}'
+NORMAL_WHITE='%F{255}'
+RESET='%f'
 
-# Symbols
-gear='⚙️'
-user_icon='👤'
-pc_icon='💻'
-folder='📁'
-check='✓'
-cross='✗'
+# ============================================
+# 🖥️ PROFESSIONAL PROMPT
+# ============================================
+# Format: [user@host] ~/path
+#         $ 
 
-# Git info
-git_info() {
-    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    if [[ -n $branch ]]; then
-        echo " ${normal_blue}(${branch})${reset}"
+# Get current git branch (if in git repo)
+git_branch() {
+    local branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+    if [ -n "$branch" ]; then
+        echo " ${NORMAL_GRAY}(${NORMAL_BLUE}git:${branch}${NORMAL_GRAY})${RESET}"
     fi
 }
 
-# Exit status
+# Get exit status
 exit_status() {
-    echo "%(?.${normal_green}${check}.${normal_red}${cross})${reset}"
+    echo "%(?.${NORMAL_BLUE}✓.${NORMAL_GRAY}✗)"
 }
 
-# Left prompt - clean, no mode indicator
-PROMPT=''
-PROMPT+='${normal_blue}${user_icon} %n${reset}'
-PROMPT+='${normal_gray}@%m${reset} '
-PROMPT+='${normal_yellow}${folder} %~${reset}'
-PROMPT+='$(git_info) '
-PROMPT+='$(exit_status) '
-PROMPT+='${normal_blue}\$ ${reset}'
+# Build the prompt
+PROMPT='${NORMAL_GRAY}[${NORMAL_BLUE}%n${NORMAL_GRAY}@${NORMAL_BLUE}%m${NORMAL_GRAY}]${RESET}$(git_branch) ${NORMAL_BLUE}%~${RESET}
+${NORMAL_GRAY}$${RESET} '
 
-# Right prompt - time
-RPROMPT='${normal_gray}%D{%H:%M}${reset}'
+# Right prompt shows time
+RPROMPT='${NORMAL_GRAY}[${NORMAL_BLUE}%*${NORMAL_GRAY}]${RESET} $(exit_status)'
 
-# Terminal title
-case "$TERM" in
-    xterm*|rxvt*|konsole*|kitty*|alacritty*)
-        precmd() { print -Pn "\e]0;%n@%m\a" }
-        ;;
-esac
+# ============================================
+# 🖥️ STANDARD ALIASES
+# ============================================
 
-# Clean aliases
-declare -A NORMAL_ALIASES=(
-    ["ll"]="ls -la --color=auto"
-    ["la"]="ls -A --color=auto"
-    ["l"]="ls -CF --color=auto"
-    [".."]="cd .."
-    ["..."]="cd ../.."
-    ["update"]="sudo pacman -Syu"
-    ["search"]="pacman -Ss"
-    ["install"]="sudo pacman -S"
-    ["remove"]="sudo pacman -R"
-    ["clean"]="sudo pacman -Sc"
-)
+# Basic navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ~='cd ~'
 
-for alias_name in ${(k)NORMAL_ALIASES}; do
-    alias $alias_name="${NORMAL_ALIASES[$alias_name]}"
-done
+# LS with colors
+alias ls='ls --color=auto -F'
+alias la='ls -la --color=auto'
+alias ll='ls -lh --color=auto'
+alias l='ls -CF --color=auto'
 
-# Clean welcome
-echo ""
-echo "Terminal ready. Welcome back, $(whoami)."
-echo ""
+# Grep with colors
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# System info
+alias sysinfo='neofetch'
+alias clean='~/kde-mode-switcher.sh normal && echo "Clean mode activated"'
+
+# Quick shortcuts
+alias ff='firefox &'
+alias doc='cd ~/Documents'
+alias down='cd ~/Downloads'
+
+# Standard output
+alias cat='bat --style=plain --paging=never 2>/dev/null || cat'
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+
+# ============================================
+# 🖥️ FUNCTIONS
+# ============================================
+
+# Sudo with confirmation
+sudo() {
+    echo "Executing with elevated privileges..."
+    command sudo "$@"
+}
+
+# Professional greeting
+greeting() {
+    local hour=$(date +%H)
+    if [ $hour -lt 12 ]; then
+        echo "Good morning!"
+    elif [ $hour -lt 18 ]; then
+        echo "Good afternoon!"
+    else
+        echo "Good evening!"
+    fi
+}
+
+# ============================================
+# 🎨 LS COLORS (STANDARD)
+# ============================================
+export LS_COLORS='di=1;34:ln=1;36:so=33:pi=33:ex=1;32:bd=33:cd=33:su=31:sg=31:tw=34:ow=34:*.mp4=35:*.mkv=35:*.avi=35:*.mov=35:*.webm=35:*.jpg=35:*.jpeg=35:*.png=35:*.gif=35:*.zip=31:*.tar=31:*.gz=31:*.bz2=31:*.7z=31:*.mp3=35:*.flac=35:*.ogg=35:*.pdf=33:*.doc=33:*.docx=33:*.txt=37:*.sh=1;32:*.zsh=1;32:*.py=1;32:*.js=1;32:*.html=34:*.css=36:'
+
+# ============================================
+# 🖥️ COMPLETION SETTINGS
+# ============================================
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' verbose true
+
+# ============================================
+# 🖥️ HISTORY SETTINGS
+# ============================================
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+
+# ==========================================
+# 🖥️ WELCOME MESSAGE
+# ==========================================
+clear
+greeting 2>/dev/null || echo "Welcome!"
