@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# 🍆💦 ENDEAVOUROS SLUT DESKTOP - ONE-CLICK INSTALLER 💋🔥
-# For EndeavourOS and Arch Linux ONLY - No Debian/Tails support!
+# 🍆💦 ENDEAVOUROS SLUT DESKTOP - KDE EDITION 💋🔥
+# Customizes KDE Plasma with three depraved modes!
+# For EndeavourOS / Arch Linux ONLY
 
 set -e
 
@@ -13,74 +14,35 @@ HOT_PINK='\033[38;5;198m'
 RED='\033[38;5;196m'
 PURPLE='\033[38;5;93m'
 GREEN='\033[38;5;82m'
-YELLOW='\033[38;5;220m'
 RESET='\033[0m'
 
-# ===== CHECK IF ENDEAVOUROS/ARCH =====
+# ===== DISTRO CHECK =====
 check_distro() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         DISTRO=$ID
-    else
-        echo -e "${RED}❌ Cannot detect Linux distribution${RESET}"
-        exit 1
     fi
     
-    # Only allow Arch-based distros
-    if [[ "$DISTRO" != "arch" ]] && [[ "$DISTRO" != "endeavouros" ]]; then
+    if [[ "$DISTRO" != "endeavouros" ]] && [[ "$DISTRO" != "arch" ]] && [[ "$DISTRO" != "manjaro" ]]; then
         echo -e "${RED}❌ ERROR: This installer is for EndeavourOS/Arch Linux ONLY!${RESET}"
-        echo -e "${RED}   Your distro: $DISTRO${RESET}"
-        echo ""
-        echo -e "${YELLOW}💡 For Tails or Debian, use the legacy branch:${RESET}"
-        echo -e "${YELLOW}   git clone -b debian https://github.com/Vesper1453/TailsSlutDesktop.git${RESET}"
+        echo -e "${RED}   Detected: $DISTRO${RESET}"
         exit 1
     fi
     
-    if [[ "$DISTRO" == "endeavouros" ]]; then
-        echo -e "${PINK}🚀 EndeavourOS detected! Perfect for maximum depravity...${RESET}"
-    else
-        echo -e "${PINK}🏹 Arch Linux detected! Let's get slutty...${RESET}"
-    fi
+    echo -e "${GREEN}✅ EndeavourOS/Arch detected! Let's get slutty! 💋${RESET}"
 }
 
-# ===== TERMINAL DETECTION =====
-detect_terminal() {
-    if command -v konsole &> /dev/null; then
-        TERMINAL="konsole"
-        TERMINAL_CMD="konsole -e"
-        echo -e "${PINK}💋 Konsole detected (KDE)!${RESET}"
-    elif command -v kitty &> /dev/null; then
-        TERMINAL="kitty"
-        TERMINAL_CMD="kitty -e"
-        echo -e "${PINK}💋 Kitty terminal detected!${RESET}"
-    elif command -v alacritty &> /dev/null; then
-        TERMINAL="alacritty"
-        TERMINAL_CMD="alacritty -e"
-        echo -e "${PINK}💋 Alacritty detected!${RESET}"
-    elif command -v gnome-terminal &> /dev/null; then
-        TERMINAL="gnome-terminal"
-        TERMINAL_CMD="gnome-terminal -- bash -c"
-        echo -e "${YELLOW}⚠️  GNOME Terminal detected - installing Kitty instead${RESET}"
-    else
-        TERMINAL="xterm"
-        TERMINAL_CMD="xterm -e"
-        echo -e "${YELLOW}⚠️  No good terminal found - will install Kitty${RESET}"
-    fi
-}
-
-# Detect at start
 check_distro
-detect_terminal
 
 echo -e "${PURPLE}"
 cat << 'EOF'
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║     🍆💦  ENDEAVOUROS SLUT DESKTOP INSTALLER  💋🔥            ║
+║     🍆💦  ENDEAVOUROS SLUT DESKTOP - KDE EDITION  💋🔥        ║
 ║                                                                ║
-║              For EndeavourOS & Arch Linux ONLY                ║
+║     The most depraved KDE Plasma experience ever...           ║
 ║                                                                ║
-║     The most depraved Linux desktop experience ever...        ║
+║     💻 Stays in KDE - No window manager switching!              ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
 EOF
@@ -90,37 +52,56 @@ echo -e "${RESET}"
 show_menu() {
     echo -e "${HOT_PINK}Select installation option:${RESET}"
     echo ""
-    echo "  1) 🔥 FULL INSTALL (i3 + terminal + all packages + adult sites)"
-    echo "  2) 🖥️  i3 Window Manager + all slutty features"
-    echo "  3) 📟 Terminal Customization only"
-    echo "  4) 📦 Install packages only"
+    echo "  1) 🔥 FULL KDE CUSTOMIZATION (colors + terminal + wallpapers + shortcuts)"
+    echo "  2) 🎨 KDE Color Schemes + Plasma Theme only"
+    echo "  3) 📟 Terminal Customization only (Konsole themes)"
+    echo "  4) 🖼️  Wallpapers + Desktop Settings only"
     echo "  5) 🚨 Install Panic Button only"
     echo "  6) 🎬 Install Terminal Video Viewer only"
     echo "  7) 🍆 Create Adult Sites Shortcuts only"
-    echo "  8) 📋 Show package list"
+    echo "  8) 🔄 Switch to Mode (Degenerate/Horny/Normal)"
     echo "  9) ❌ Exit"
     echo ""
     read -p "Enter choice [1-9]: " choice
     
     case $choice in
         1) full_install ;;
-        2) install_i3 ;;
+        2) install_kde_themes ;;
         3) install_terminal ;;
-        4) install_packages ;;
+        4) install_wallpapers ;;
         5) install_panic_button ;;
         6) install_video_viewer ;;
         7) create_adult_shortcuts ;;
-        8) show_packages ;;
+        8) switch_kde_mode ;;
         9) exit 0 ;;
         *) echo -e "${RED}Invalid choice${RESET}"; show_menu ;;
     esac
 }
 
+# Detect terminal
+TERMINAL_CMD=""
+detect_terminal() {
+    if command -v konsole &> /dev/null; then
+        TERMINAL_CMD="konsole"
+    elif command -v kitty &> /dev/null; then
+        TERMINAL_CMD="kitty"
+    elif command -v gnome-terminal &> /dev/null; then
+        TERMINAL_CMD="gnome-terminal"
+    elif command -v alacritty &> /dev/null; then
+        TERMINAL_CMD="alacritty"
+    else
+        TERMINAL_CMD="xterm"
+    fi
+    echo -e "${PINK}💋 Detected terminal: $TERMINAL_CMD${RESET}"
+}
+
 full_install() {
-    echo -e "${RED}🔥 FULL ENDEAVOUROS SLUT INSTALLATION...${RESET}"
+    echo -e "${RED}🔥 FULL KDE SLUTIFICATION STARTING...${RESET}"
+    detect_terminal
     install_packages
-    install_i3
+    install_kde_themes
     install_terminal
+    install_wallpapers
     install_panic_button
     install_video_viewer
     create_adult_shortcuts
@@ -130,277 +111,607 @@ full_install() {
     cat << 'EOF'
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║     ✅ ENDEAVOUROS SLUT DESKTOP FULLY INSTALLED! ✅          ║
+║           ✅ FULL KDE INSTALLATION COMPLETE! ✅               ║
 ║                                                                ║
-║     Your system is now ready for maximum depravity!            ║
+║     Your slutty KDE Plasma desktop is ready!                  ║
 ║                                                                ║
-║     Mode Hotkeys:                                              ║
-║       Alt+F1  = 🔥 Degenerate Mode (explicit AF)             ║
-║       Alt+F2  = 💦 Horny Mode (sensual & flirty)              ║
-║       Alt+F3  = ✨ Normal Mode (clean for mom visits)         ║
+║     Hotkeys:                                                   ║
+║       Alt+F1  = 🔥 Degenerate Mode                             ║
+║       Alt+F2  = 💦 Horny Mode                                  ║
+║       Alt+F3  = ✨ Normal Mode                                 ║
+║       Meta+Shift+Delete = 🚨 PANIC BUTTON                     ║
 ║                                                                ║
-║     Emergency:                                                 ║
-║       Mod+Shift+Delete = 🚨 PANIC BUTTON                     ║
-║                                                                ║
-║     17 adult site shortcuts on your Desktop!                   ║
-║                                                                ║
-║     Reboot and select i3 from the login menu!                  ║
+║     Run: ~/kde-mode-switcher.sh degenerate                    ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
 EOF
     echo -e "${RESET}"
+    
+    echo -e "${HOT_PINK}💋 You may need to log out and back in for all changes to apply!${RESET}"
 }
 
 install_packages() {
-    echo -e "${HOT_PINK}📦 Installing EndeavourOS packages...${RESET}"
+    echo -e "${HOT_PINK}📦 Installing all slutty packages...${RESET}"
     
-    # Update pacman database
-    echo -e "${PINK}💋 Updating package database...${RESET}"
     sudo pacman -Sy
     
-    # Core packages
-    echo -e "${PINK}💋 Installing core packages...${RESET}"
+    # Core KDE + customization packages
     sudo pacman -S --needed --noconfirm \
-        i3-wm i3status i3lock dmenu \
-        i3-gaps \
-        picom nitrogen kitty rofi polybar \
-        dunst lxappearance \
-        ffmpeg mpv \
-        libcaca libsixel \
-        zsh zsh-completions \
-        feh imagemagick \
-        ranger thunar dolphin \
-        htop btop \
-        conky neofetch cmatrix \
-        fortune-mod cowsay lolcat \
-        wmctrl xdotool xclip \
-        git curl wget \
-        noto-fonts noto-fonts-emoji \
+        plasma-workspace \
+        plasma-desktop \
+        konsole \
+        dolphin \
+        spectacle \
+        plasma-pa \
+        plasma-nm \
+        kdeplasma-addons \
+        plasma-firewall \
+        kwin \
+        kscreen \
+        kwallet \
+        kwalletmanager \
+        qt5-graphicaleffects \
+        qt5-quickcontrols2 \
+        qt5-multimedia \
+        nitrogen \
+        picom \
+        feh \
+        ffmpeg \
+        mpv \
+        vlc \
+        chafa \
+        libcaca \
+        zsh \
+        zsh-completions \
+        zsh-syntax-highlighting \
+        zsh-autosuggestions \
+        oh-my-zsh-git \
+        powerlevel10k \
+        lolcat \
+        fortune-mod \
+        cowsay \
+        cmatrix \
+        neofetch \
+        htop \
+        btop \
+        wmctrl \
+        xdotool \
+        xclip \
+        xorg-xrandr \
+        xorg-xprop \
+        imagemagick \
+        noto-fonts \
+        noto-fonts-emoji \
         ttf-nerd-fonts-symbols-mono \
         ttf-font-awesome \
-        firefox chromium \
+        ttf-jetbrains-mono \
         2>/dev/null || {
-        echo -e "${RED}⚠️  Some packages may have failed${RESET}"
+        echo -e "${RED}⚠️  Some packages may have failed to install${RESET}"
     }
     
-    # Install yay if not present
-    if ! command -v yay &> /dev/null; then
-        echo -e "${HOT_PINK}💋 Installing yay AUR helper...${RESET}"
-        sudo pacman -S --needed --noconfirm git base-devel
-        git clone https://aur.archlinux.org/yay.git /tmp/yay
-        cd /tmp/yay && makepkg -si --noconfirm
-        cd -
+    # Check for AUR helper
+    if command -v yay &> /dev/null; then
+        echo -e "${HOT_PINK}💋 Installing extra AUR packages with yay...${RESET}"
+        yay -S --needed --noconfirm \
+            cava \
+            plasma-applet-caffeine-plus \
+            2>/dev/null || true
     fi
-    
-    # Install AUR packages
-    echo -e "${HOT_PINK}💋 Installing AUR packages...${RESET}"
-    yay -S --needed --noconfirm \
-        cava \
-        2>/dev/null || true
     
     echo -e "${GREEN}✅ Packages installed!${RESET}"
 }
 
-install_i3() {
-    echo -e "${HOT_PINK}🖥️  Setting up i3 Window Manager...${RESET}"
+install_kde_themes() {
+    echo -e "${HOT_PINK}🎨 Installing KDE Plasma color schemes...${RESET}"
     
-    # Create directories
-    mkdir -p ~/.config/i3
-    mkdir -p ~/.config/i3/scripts
-    mkdir -p ~/.config/picom
-    mkdir -p ~/.config/dunst
-    mkdir -p ~/.config/rofi
+    # Create KDE directories
+    mkdir -p ~/.local/share/color-schemes
+    mkdir -p ~/.local/share/plasma/desktoptheme
+    mkdir -p ~/.config/kcminput
+    mkdir -p ~/.config/kcmfonts
     
-    # Copy i3 configs
-    cp "$SCRIPT_DIR/i3/config-degenerate" ~/.config/i3/config-degenerate
-    cp "$SCRIPT_DIR/i3/config-horny" ~/.config/i3/config-horny
-    cp "$SCRIPT_DIR/i3/config-normal" ~/.config/i3/config-normal
+    # Copy color schemes
+    cp "$SCRIPT_DIR/kde/colors/DegenerateSlut.colors" ~/.local/share/color-schemes/
+    cp "$SCRIPT_DIR/kde/colors/HornySlut.colors" ~/.local/share/color-schemes/
+    cp "$SCRIPT_DIR/kde/colors/NormalClean.colors" ~/.local/share/color-schemes/
     
-    # Copy switch-mode script
-    cp "$SCRIPT_DIR/i3/scripts/switch-mode" ~/.config/i3/scripts/switch-mode
-    chmod +x ~/.config/i3/scripts/switch-mode
+    # Install wallpapers
+    cp "$SCRIPT_DIR/wallpapers/degenerate_wallpaper.jpg" ~/Pictures/
+    cp "$SCRIPT_DIR/wallpapers/horny_wallpaper.jpg" ~/Pictures/
     
-    # Copy picom configs
-    cp "$SCRIPT_DIR/picom/picom-degenerate.conf" ~/.config/picom/
-    cp "$SCRIPT_DIR/picom/picom-horny.conf" ~/.config/picom/
+    # Create mode switcher script for KDE
+    cp "$SCRIPT_DIR/kde/scripts/kde-mode-switcher.sh" ~/kde-mode-switcher.sh
+    chmod +x ~/kde-mode-switcher.sh
     
-    # Copy dunst configs if they exist
-    if [ -f "$SCRIPT_DIR/dunst/dunst-degenerate.conf" ]; then
-        cp "$SCRIPT_DIR/dunst"/*.conf ~/.config/dunst/ 2>/dev/null || true
-    fi
+    # Create desktop shortcuts for mode switching
+    mkdir -p ~/Desktop
     
-    # Copy rofi themes if they exist
-    if [ -d "$SCRIPT_DIR/rofi" ]; then
-        cp "$SCRIPT_DIR/rofi"/*.rasi ~/.config/rofi/ 2>/dev/null || true
-    fi
+    # Degenerate Mode shortcut
+    cat > ~/Desktop/🔥-DEGENERATE-MODE.desktop << EOF
+[Desktop Entry]
+Name=🔥 DEGENERATE MODE
+Comment=Maximum filth mode - explicit wallpapers, cum-stained colors
+Exec=$HOME/kde-mode-switcher.sh degenerate
+Icon=applications-graphics
+Type=Application
+Terminal=false
+Categories=System;
+EOF
+    chmod +x ~/Desktop/🔥-DEGENERATE-MODE.desktop
     
-    # Set default to normal
-    cp ~/.config/i3/config-normal ~/.config/i3/config
+    # Horny Mode shortcut
+    cat > ~/Desktop/💦-HORNY-MODE.desktop << EOF
+[Desktop Entry]
+Name=💦 HORNY MODE
+Comment=Flirty mode - rose/coral sensual vibes
+Exec=$HOME/kde-mode-switcher.sh horny
+Icon=applications-graphics
+Type=Application
+Terminal=false
+Categories=System;
+EOF
+    chmod +x ~/Desktop/💦-HORNY-MODE.desktop
     
-    echo -e "${GREEN}✅ i3 configured!${RESET}"
-    echo -e "${PINK}   Logout and select 'i3' from the login menu${RESET}"
+    # Normal Mode shortcut
+    cat > ~/Desktop/✨-NORMAL-MODE.desktop << EOF
+[Desktop Entry]
+Name=✨ NORMAL MODE
+Comment=Clean mode - standard KDE look
+Exec=$HOME/kde-mode-switcher.sh normal
+Icon=applications-graphics
+Type=Application
+Terminal=false
+Categories=System;
+EOF
+    chmod +x ~/Desktop/✨-NORMAL-MODE.desktop
+    
+    # Create KDE global shortcuts
+    mkdir -p ~/.config/kglobalshortcutsrc
+    
+    echo -e "${GREEN}✅ KDE themes installed!${RESET}"
+    echo -e "${PINK}   Use mode shortcuts on desktop or run: ~/kde-mode-switcher.sh <mode>${RESET}"
 }
 
 install_terminal() {
-    echo -e "${PURPLE}📟 Installing Terminal Customizations...${RESET}"
+    echo -e "${HOT_PINK}📟 Installing terminal customization...${RESET}"
     
-    # Create directories
-    mkdir -p ~/.config/slutterminal
-    mkdir -p ~/.config/kitty
-    mkdir -p ~/.config/kitty/scripts
+    # Install for Konsole (KDE's default)
     mkdir -p ~/.local/share/konsole
     
-    # Install Kitty configs
-    if [ -d "$SCRIPT_DIR/terminal/kitty" ]; then
-        echo -e "${PINK}💋 Installing Kitty configs...${RESET}"
-        cp "$SCRIPT_DIR/terminal/kitty"/*.conf ~/.config/kitty/
-        cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/.config/kitty/scripts/switch-mode
-        chmod +x ~/.config/kitty/scripts/switch-mode
-        cp ~/.config/kitty/kitty-normal.conf ~/.config/kitty/kitty.conf
-    fi
+    # Copy Konsole color schemes
+    cp "$SCRIPT_DIR/terminal/konsole/DegenerateSlut.colorscheme" ~/.local/share/konsole/ 2>/dev/null || true
+    cp "$SCRIPT_DIR/terminal/konsole/HornySlut.colorscheme" ~/.local/share/konsole/ 2>/dev/null || true
+    cp "$SCRIPT_DIR/terminal/konsole/NormalClean.colorscheme" ~/.local/share/konsole/ 2>/dev/null || true
     
-    # Install Konsole color schemes
-    if [ -d "$SCRIPT_DIR/terminal/konsole" ]; then
-        echo -e "${PINK}💋 Installing Konsole color schemes...${RESET}"
-        cp "$SCRIPT_DIR/terminal/konsole"/*.colorscheme ~/.local/share/konsole/
-    fi
+    # Create Konsole profile with slutty settings
+    mkdir -p ~/.config/konsolerc
     
-    # Install Bash prompts
-    if [ -d "$SCRIPT_DIR/terminal/bash" ]; then
-        echo -e "${PINK}💋 Installing Bash prompts...${RESET}"
-        cp "$SCRIPT_DIR/terminal/bash"/*.sh ~/.config/slutterminal/
-        cp ~/.config/slutterminal/bash-normal.sh ~/.config/slutterminal/bash-current.sh
-        
-        # Add to .bashrc
-        if ! grep -q "slutterminal/bash-current.sh" ~/.bashrc 2>/dev/null; then
-            echo "" >> ~/.bashrc
-            echo "# 🍆💦 Slutty Terminal Prompt 💋🔥" >> ~/.bashrc
-            echo "source ~/.config/slutterminal/bash-current.sh" >> ~/.bashrc
-        fi
-    fi
+    # Install bash configs
+    mkdir -p ~/.config/slutterminal/bash
+    cp "$SCRIPT_DIR/terminal/bash/bash-degenerate.sh" ~/.config/slutterminal/bash/
+    cp "$SCRIPT_DIR/terminal/bash/bash-horny.sh" ~/.config/slutterminal/bash/
+    cp "$SCRIPT_DIR/terminal/bash/bash-normal.sh" ~/.config/slutterminal/bash/
     
-    # Install Zsh prompts
-    if [ -d "$SCRIPT_DIR/terminal/zsh" ]; then
-        echo -e "${PINK}💋 Installing Zsh prompts...${RESET}"
-        cp "$SCRIPT_DIR/terminal/zsh"/*.zsh ~/.config/slutterminal/
-        cp ~/.config/slutterminal/zsh-normal.zsh ~/.config/slutterminal/zsh-current.zsh
-        
-        # Add to .zshrc
-        if [ -f ~/.zshrc ] && ! grep -q "slutterminal/zsh-current.zsh" ~/.zshrc 2>/dev/null; then
-            echo "" >> ~/.zshrc
-            echo "# 🍆💦 Slutty Terminal Prompt 💋🔥" >> ~/.zshrc
-            echo "source ~/.config/slutterminal/zsh-current.zsh" >> ~/.zshrc
-        fi
-    fi
+    # Install zsh configs
+    mkdir -p ~/.config/slutterminal/zsh
+    cp "$SCRIPT_DIR/terminal/zsh/zsh-degenerate.zsh" ~/.config/slutterminal/zsh/
+    cp "$SCRIPT_DIR/terminal/zsh/zsh-horny.zsh" ~/.config/slutterminal/zsh/
+    cp "$SCRIPT_DIR/terminal/zsh/zsh-normal.zsh" ~/.config/slutterminal/zsh/
     
-    # Copy terminal switcher to home
+    # Install terminal switcher
     cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/terminal-switcher.sh
     chmod +x ~/terminal-switcher.sh
     
-    echo -e "${GREEN}✅ Terminal customized!${RESET}"
-    echo -e "${PINK}   Switch modes: ~/terminal-switcher.sh [degenerate|horny|normal]${RESET}"
+    # Add to shell rc files if not already present
+    if ! grep -q "slutterminal" ~/.bashrc 2>/dev/null; then
+        echo "" >> ~/.bashrc
+        echo "# 🍆💦 Slut Terminal Config 💋🔥" >> ~/.bashrc
+        echo "source ~/.config/slutterminal/bash/bash-degenerate.sh" >> ~/.bashrc
+    fi
+    
+    if [ -f ~/.zshrc ] && ! grep -q "slutterminal" ~/.zshrc 2>/dev/null; then
+        echo "" >> ~/.zshrc
+        echo "# 🍆💦 Slut Terminal Config 💋🔥" >> ~/.zshrc
+        echo "source ~/.config/slutterminal/zsh/zsh-degenerate.zsh" >> ~/.zshrc
+    fi
+    
+    echo -e "${GREEN}✅ Terminal customization installed!${RESET}"
+    echo -e "${PINK}   Run: ~/terminal-switcher.sh <mode> to switch${RESET}"
+}
+
+install_wallpapers() {
+    echo -e "${HOT_PINK}🖼️  Installing wallpapers...${RESET}"
+    
+    mkdir -p ~/Pictures/Wallpapers
+    
+    cp "$SCRIPT_DIR/wallpapers/degenerate_wallpaper.jpg" ~/Pictures/Wallpapers/
+    cp "$SCRIPT_DIR/wallpapers/horny_wallpaper.jpg" ~/Pictures/Wallpapers/
+    
+    # Set default wallpaper (will apply after mode switch)
+    echo -e "${GREEN}✅ Wallpapers installed to ~/Pictures/Wallpapers/${RESET}"
 }
 
 install_panic_button() {
     echo -e "${RED}🚨 Installing Panic Button...${RESET}"
     
-    mkdir -p ~/.config/i3/scripts
-    cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/.config/i3/scripts/panic-button
-    chmod +x ~/.config/i3/scripts/panic-button
-    cp "$SCRIPT_DIR/scripts/panic-button.sh" ~/panic-button.sh
-    chmod +x ~/panic-button.sh
+    # Create panic button script
+    cat > ~/.local/bin/slut-panic << 'EOF'
+#!/bin/bash
+# 🚨 PANIC BUTTON - EMERGENCY WIPE 🚨
+
+# Kill all browsers
+pkill -9 firefox 2>/dev/null || true
+pkill -9 chromium 2>/dev/null || true
+pkill -9 brave 2>/dev/null || true
+pkill -9 tor-browser 2>/dev/null || true
+
+# Clear browser data
+rm -rf ~/.cache/mozilla/firefox/*/cache2/* 2>/dev/null || true
+rm -rf ~/.cache/chromium/* 2>/dev/null || true
+
+# Hide adult shortcuts
+mkdir -p ~/.hidden_adult_icons
+mv ~/Desktop/*Porn*.desktop ~/.hidden_adult_icons/ 2>/dev/null || true
+mv ~/Desktop/*Xvideos*.desktop ~/.hidden_adult_icons/ 2>/dev/null || true
+mv ~/Desktop/*Spankbang*.desktop ~/.hidden_adult_icons/ 2>/dev/null || true
+mv ~/Desktop/*Hentai*.desktop ~/.hidden_adult_icons/ 2>/dev/null || true
+
+# Clear recent files
+rm -rf ~/.local/share/RecentDocuments/* 2>/dev/null || true
+
+# Clear bash history
+history -c 2>/dev/null || true
+rm -f ~/.bash_history 2>/dev/null || true
+
+# Switch to Normal mode
+~/kde-mode-switcher.sh normal
+
+# Show notification
+kdialog --title "🚨 PANIC BUTTON ACTIVATED" --msgbox "All evidence hidden! Desktop switched to Normal mode."
+EOF
+    
+    chmod +x ~/.local/bin/slut-panic
     
     # Create desktop shortcut
-    echo "[Desktop Entry]" > ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Name=🚨 PANIC BUTTON" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Comment=Emergency wipe - hides all evidence" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Exec=$TERMINAL_CMD ~/.config/i3/scripts/panic-button" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Type=Application" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Terminal=false" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
-    echo "Icon=dialog-error" >> ~/Desktop/🚨-PANIC-BUTTON.desktop
+    cat > ~/Desktop/🚨-PANIC-BUTTON.desktop << 'EOF'
+[Desktop Entry]
+Name=🚨 PANIC BUTTON
+Comment=Emergency wipe - hides all evidence instantly
+Exec=~/.local/bin/slut-panic
+Icon=dialog-error
+Type=Application
+Terminal=false
+Categories=System;Security;
+EOF
     chmod +x ~/Desktop/🚨-PANIC-BUTTON.desktop
     
+    # Add KDE global shortcut for panic button (Meta+Shift+Delete)
+    kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "SlutPanic" "Meta+Shift+Delete,Meta+Shift+Delete,Activate Slut Panic"
+    
     echo -e "${GREEN}✅ Panic button installed!${RESET}"
+    echo -e "${PINK}   Desktop: 🚨-PANIC-BUTTON.desktop${RESET}"
+    echo -e "${PINK}   Hotkey: Meta+Shift+Delete${RESET}"
 }
 
 install_video_viewer() {
     echo -e "${HOT_PINK}🎬 Installing Terminal Video Viewer...${RESET}"
     
-    cp "$SCRIPT_DIR/scripts/terminal-video-viewer.sh" ~/terminal-video.sh
-    chmod +x ~/terminal-video.sh
-    mkdir -p ~/.local/bin
-    ln -sf ~/terminal-video.sh ~/.local/bin/terminal-video 2>/dev/null || true
-    
-    echo "[Desktop Entry]" > ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Name=🎬 Terminal Video" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Comment=Watch videos in terminal (ASCII/Sixel)" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Exec=$TERMINAL_CMD ~/terminal-video.sh --help" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Type=Application" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Terminal=false" >> ~/Desktop/🎬-Terminal-Video.desktop
-    echo "Icon=video-x-generic" >> ~/Desktop/🎬-Terminal-Video.desktop
-    chmod +x ~/Desktop/🎬-Terminal-Video.desktop
-    
-    echo -e "${GREEN}✅ Video viewer installed!${RESET}"
-}
+    # Create the video viewer script
+    cat > ~/.local/bin/terminal-porn << 'EOF'
+#!/bin/bash
+# 🍆💦 TERMINAL VIDEO VIEWER 💋🔥
 
-show_packages() {
-    cat "$SCRIPT_DIR/PACKAGES.md"
+VIDEO="$1"
+
+if [ -z "$VIDEO" ]; then
+    echo "Usage: terminal-porn <video-file>"
+    echo ""
+    echo "Watches video in terminal using ASCII art!"
+    exit 1
+fi
+
+# Check which viewer is available
+if command -v mpv &> /dev/null; then
+    # Use mpv with libcaca for terminal output
+    mpv --vo=caca "$VIDEO"
+elif command -v cacaview &> /dev/null; then
+    # Fallback to cacaview
+    cacaview "$VIDEO"
+else
+    echo "❌ No terminal video player found!"
+    echo "Install: sudo pacman -S mpv libcaca"
+    exit 1
+fi
+EOF
+    
+    chmod +x ~/.local/bin/terminal-porn
+    
+    echo -e "${GREEN}✅ Terminal video viewer installed!${RESET}"
+    echo -e "${PINK}   Usage: terminal-porn <video.mp4>${RESET}"
 }
 
 create_adult_shortcuts() {
-    echo -e "${RED}🍆💦 Creating Adult Site Shortcuts... 💋🔥${RESET}"
+    echo -e "${HOT_PINK}🍆 Creating Adult Sites Shortcuts...${RESET}"
     
     mkdir -p ~/Desktop
     
-    # Mainstream Porn
-    create_shortcut "🔞-Pornhub" "https://pornhub.com"
-    create_shortcut "🔞-Xvideos" "https://xvideos.com"
-    create_shortcut "🔞-Xnxx" "https://xnxx.com"
-    create_shortcut "🔞-Redtube" "https://redtube.com"
-    create_shortcut "🔞-Youporn" "https://youporn.com"
-    create_shortcut "🔞-Tube8" "https://tube8.com"
-    create_shortcut "🔞-Spankbang" "https://spankbang.com"
-    create_shortcut "🔞-xHamster" "https://xhamster.com"
-    
-    # Cam Sites
-    create_shortcut "🎥-Chaturbate" "https://chaturbate.com"
-    create_shortcut "🎥-CamSoda" "https://camsoda.com"
-    create_shortcut "🎥-Stripchat" "https://stripchat.com"
-    create_shortcut "🎥-BongaCams" "https://bongacams.com"
-    create_shortcut "🎥-MyFreeCams" "https://myfreecams.com"
-    create_shortcut "🎥-JerkMate" "https://jerkmate.com"
-    
-    # Hentai
-    create_shortcut "🦊-HentaiHaven" "https://hentaihaven.org"
-    create_shortcut "🦊-Rule34" "https://rule34.xxx"
-    
-    echo -e "${GREEN}✅ 17 adult site shortcuts created!${RESET}"
+    # Mainstream Porn Sites
+    cat > ~/Desktop/🍆-Pornhub.desktop << EOF
+[Desktop Entry]
+Name=🍆 Pornhub
+Comment=Mainstream adult content
+Exec=firefox https://pornhub.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🍆-Pornhub.desktop
+
+    cat > ~/Desktop/💦-Xvideos.desktop << EOF
+[Desktop Entry]
+Name=💦 Xvideos
+Comment=Adult video streaming
+Exec=firefox https://xvideos.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/💦-Xvideos.desktop
+
+    cat > ~/Desktop/🔥-Xnxx.desktop << EOF
+[Desktop Entry]
+Name=🔥 Xnxx
+Comment=Adult video platform
+Exec=firefox https://xnxx.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🔥-Xnxx.desktop
+
+    cat > ~/Desktop/🍑-Redtube.desktop << EOF
+[Desktop Entry]
+Name=🍑 Redtube
+Comment=Adult content
+Exec=firefox https://redtube.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🍑-Redtube.desktop
+
+    cat > ~/Desktop/👅-Youporn.desktop << EOF
+[Desktop Entry]
+Name=👅 Youporn
+Comment=Adult video site
+Exec=firefox https://youporn.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/👅-Youporn.desktop
+
+    cat > ~/Desktop/🌸-Tube8.desktop << EOF
+[Desktop Entry]
+Name=🌸 Tube8
+Comment=Video tube site
+Exec=firefox https://tube8.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🌸-Tube8.desktop
+
+    cat > ~/Desktop/💋-Spankbang.desktop << EOF
+[Desktop Entry]
+Name=💋 Spankbang
+Comment=Spanking content
+Exec=firefox https://spankbang.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/💋-Spankbang.desktop
+
+    cat > ~/Desktop/🐹-XHamster.desktop << EOF
+[Desktop Entry]
+Name=🐹 XHamster
+Comment=Adult tube site
+Exec=firefox https://xhamster.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🐹-XHamster.desktop
+
+    # Cam/OnlyFans Sites
+    cat > ~/Desktop/📹-Chaturbate.desktop << EOF
+[Desktop Entry]
+Name=📹 Chaturbate
+Comment=Live cam shows
+Exec=firefox https://chaturbate.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/📹-Chaturbate.desktop
+
+    cat > ~/Desktop/💻-CamSoda.desktop << EOF
+[Desktop Entry]
+Name=💻 CamSoda
+Comment=Live cams
+Exec=firefox https://camsoda.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/💻-CamSoda.desktop
+
+    cat > ~/Desktop/🎥-Stripchat.desktop << EOF
+[Desktop Entry]
+Name=🎥 Stripchat
+Comment=Live strip shows
+Exec=firefox https://stripchat.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🎥-Stripchat.desktop
+
+    cat > ~/Desktop/💳-BongaCams.desktop << EOF
+[Desktop Entry]
+Name=💳 BongaCams
+Comment=Live cam models
+Exec=firefox https://bongacams.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/💳-BongaCams.desktop
+
+    cat > ~/Desktop/🎀-MyFreeCams.desktop << EOF
+[Desktop Entry]
+Name=🎀 MyFreeCams
+Comment=Free live cams
+Exec=firefox https://myfreecams.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🎀-MyFreeCams.desktop
+
+    cat > ~/Desktop/🔞-JerkMate.desktop << EOF
+[Desktop Entry]
+Name=🔞 JerkMate
+Comment=Interactive cams
+Exec=firefox https://jerkmate.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🔞-JerkMate.desktop
+
+    # Hentai/Rule34 Sites
+    cat > ~/Desktop/👾-HentaiHaven.desktop << EOF
+[Desktop Entry]
+Name=👾 Hentai Haven
+Comment=Hentai streaming
+Exec=firefox https://hentaihaven.org
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/👾-HentaiHaven.desktop
+
+    cat > ~/Desktop/🦊-Rule34.desktop << EOF
+[Desktop Entry]
+Name=🦊 Rule34
+Comment=Rule 34 content
+Exec=firefox https://rule34.xxx
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🦊-Rule34.desktop
+
+    cat > ~/Desktop/🐺-E621.desktop << EOF
+[Desktop Entry]
+Name=🐺 E621
+Comment=Furry content
+Exec=firefox https://e621.net
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🐺-E621.desktop
+
+    cat > ~/Desktop/🎨-Gelbooru.desktop << EOF
+[Desktop Entry]
+Name=🎨 Gelbooru
+Comment=Anime image board
+Exec=firefox https://gelbooru.com
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🎨-Gelbooru.desktop
+
+    cat > ~/Desktop/📖-Danbooru.desktop << EOF
+[Desktop Entry]
+Name=📖 Danbooru
+Comment=Anime art board
+Exec=firefox https://danbooru.donmai.us
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/📖-Danbooru.desktop
+
+    cat > ~/Desktop/🌟-EHentai.desktop << EOF
+[Desktop Entry]
+Name=🌟 E-Hentai
+Comment=Hentai gallery
+Exec=firefox https://e-hentai.org
+Icon=applications-internet
+Type=Application
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+    chmod +x ~/Desktop/🌟-EHentai.desktop
+
+    echo -e "${GREEN}✅ Created 17 adult site shortcuts on Desktop!${RESET}"
 }
 
-create_shortcut() {
-    local name=$1
-    local url=$2
+switch_kde_mode() {
+    echo -e "${HOT_PINK}🔄 Switch KDE Mode...${RESET}"
+    echo ""
+    echo "  1) 🔥 DEGENERATE MODE (maximum filth)"
+    echo "  2) 💦 HORNY MODE (sensual/flirty)"
+    echo "  3) ✨ NORMAL MODE (clean/professional)"
+    echo ""
+    read -p "Select mode [1-3]: " mode_choice
     
-    echo "[Desktop Entry]" > ~/Desktop/${name}.desktop
-    echo "Name=${name}" >> ~/Desktop/${name}.desktop
-    echo "Comment=Launch ${name}" >> ~/Desktop/${name}.desktop
-    echo "Exec=firefox ${url}" >> ~/Desktop/${name}.desktop
-    echo "Type=Application" >> ~/Desktop/${name}.desktop
-    echo "Terminal=false" >> ~/Desktop/${name}.desktop
-    echo "Icon=firefox" >> ~/Desktop/${name}.desktop
-    chmod +x ~/Desktop/${name}.desktop
+    case $mode_choice in
+        1) ~/kde-mode-switcher.sh degenerate ;;
+        2) ~/kde-mode-switcher.sh horny ;;
+        3) ~/kde-mode-switcher.sh normal ;;
+        *) echo -e "${RED}Invalid choice${RESET}" ;;
+    esac
 }
 
-# Command line arguments
+# Detect terminal at start for desktop file creation
+detect_terminal
+
+# If running with arguments
 if [ -n "$1" ]; then
     case "$1" in
         --full) full_install ;;
-        --i3) install_i3 ;;
+        --kde) install_kde_themes ;;
         --terminal) install_terminal ;;
-        --packages) install_packages ;;
+        --wallpapers) install_wallpapers ;;
         --panic) install_panic_button ;;
         --video) install_video_viewer ;;
         --adult) create_adult_shortcuts ;;
+        --mode) switch_kde_mode ;;
         *) show_menu ;;
     esac
 else
