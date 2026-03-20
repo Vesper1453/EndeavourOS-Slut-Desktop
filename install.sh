@@ -110,9 +110,9 @@ echo -e "${RESET}"
 show_menu() {
     echo -e "${HOT_PINK}Select installation option:${RESET}"
     echo ""
-    echo "  1) 🔥 FULL INSTALL (i3 + all packages + panic button + video viewer)"
+    echo "  1) 🔥 FULL INSTALL (i3 + terminal + all packages)"
     echo "  2) 🖥️  i3 Window Manager + all slutty features"
-    echo "  3) 🎨 GNOME/GTK themes only"
+    echo "  3) 📟 Terminal Customization only"
     echo "  4) 📦 Install packages only"
     echo "  5) 🚨 Install Panic Button only"
     echo "  6) 🎬 Install Terminal Video Viewer only"
@@ -125,7 +125,7 @@ show_menu() {
     case $choice in
         1) full_install ;;
         2) install_i3 ;;
-        3) install_gnome ;;
+        3) install_terminal ;;
         4) install_packages ;;
         5) install_panic_button ;;
         6) install_video_viewer ;;
@@ -347,6 +347,98 @@ install_video_viewer() {
     echo -e "${PINK}   Modes: -a (ASCII), -s (Sixel), -c (libcaca)${RESET}"
 }
 
+install_terminal() {
+    echo -e "${PURPLE}📟 Installing Terminal Customizations...${RESET}"
+    
+    # Create directories
+    mkdir -p ~/.config/slutterminal
+    mkdir -p ~/.config/kitty
+    mkdir -p ~/.config/kitty/scripts
+    
+    # Copy Kitty configs
+    if [ -d "$SCRIPT_DIR/terminal/kitty" ]; then
+        echo -e "${PINK}💋 Installing Kitty terminal configs...${RESET}"
+        cp "$SCRIPT_DIR/terminal/kitty"/*.conf ~/.config/kitty/
+        
+        # Copy switch script
+        cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/.config/kitty/scripts/switch-mode
+        chmod +x ~/.config/kitty/scripts/switch-mode
+        
+        # Set default to normal
+        cp ~/.config/kitty/kitty-normal.conf ~/.config/kitty/kitty.conf
+        
+        echo -e "${GREEN}✅ Kitty configured!${RESET}"
+    fi
+    
+    # Copy Konsole color schemes
+    if [ -d "$SCRIPT_DIR/terminal/konsole" ]; then
+        echo -e "${PINK}💋 Installing Konsole color schemes...${RESET}"
+        mkdir -p ~/.local/share/konsole
+        cp "$SCRIPT_DIR/terminal/konsole"/*.colorscheme ~/.local/share/konsole/
+        echo -e "${GREEN}✅ Konsole color schemes installed!${RESET}"
+        echo -e "${PINK}   Apply in Konsole: Settings > Edit Current Profile > Appearance${RESET}"
+    fi
+    
+    # Copy Bash prompts
+    if [ -d "$SCRIPT_DIR/terminal/bash" ]; then
+        echo -e "${PINK}💋 Installing Bash prompts...${RESET}"
+        cp "$SCRIPT_DIR/terminal/bash"/*.sh ~/.config/slutterminal/
+        
+        # Set default to normal
+        cp ~/.config/slutterminal/bash-normal.sh ~/.config/slutterminal/bash-current.sh
+        
+        # Add to .bashrc if not already there
+        if ! grep -q "slutterminal/bash-current.sh" ~/.bashrc 2>/dev/null; then
+            echo "" >> ~/.bashrc
+            echo "# Slutty Terminal Prompt" >> ~/.bashrc
+            echo "source ~/.config/slutterminal/bash-current.sh" >> ~/.bashrc
+        fi
+        
+        echo -e "${GREEN}✅ Bash prompts installed!${RESET}"
+    fi
+    
+    # Copy Zsh prompts
+    if [ -d "$SCRIPT_DIR/terminal/zsh" ]; then
+        echo -e "${PINK}💋 Installing Zsh prompts...${RESET}"
+        cp "$SCRIPT_DIR/terminal/zsh"/*.zsh ~/.config/slutterminal/
+        
+        # Set default to normal
+        cp ~/.config/slutterminal/zsh-normal.zsh ~/.config/slutterminal/zsh-current.zsh
+        
+        # Add to .zshrc if not already there
+        if [ -f ~/.zshrc ] && ! grep -q "slutterminal/zsh-current.zsh" ~/.zshrc 2>/dev/null; then
+            echo "" >> ~/.zshrc
+            echo "# Slutty Terminal Prompt" >> ~/.zshrc
+            echo "source ~/.config/slutterminal/zsh-current.zsh" >> ~/.zshrc
+        fi
+        
+        echo -e "${GREEN}✅ Zsh prompts installed!${RESET}"
+    fi
+    
+    # Copy terminal switcher
+    cp "$SCRIPT_DIR/terminal/scripts/terminal-switcher.sh" ~/terminal-switcher.sh
+    chmod +x ~/terminal-switcher.sh
+    
+    echo ""
+    echo -e "${GREEN}"
+    cat << 'EOF'
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║           ✅ TERMINAL CUSTOMIZATION COMPLETE! ✅             ║
+║                                                                ║
+║  Switch terminal modes with:                                   ║
+║    ~/terminal-switcher.sh [degenerate|horny|normal]            ║
+║                                                                ║
+║  Or use keyboard shortcuts (in Kitty):                         ║
+║    Ctrl+Shift+F1 = 🔥 Degenerate Mode                           ║
+║    Ctrl+Shift+F2 = 💦 Horny Mode                               ║
+║    Ctrl+Shift+F3 = ✨ Normal Mode                              ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+EOF
+    echo -e "${RESET}"
+}
+
 show_packages() {
     cat "$SCRIPT_DIR/PACKAGES.md"
 }
@@ -416,7 +508,7 @@ if [ -n "$1" ]; then
     case "$1" in
         --full) full_install ;;
         --i3) install_i3 ;;
-        --gnome) install_gnome ;;
+        --terminal) install_terminal ;;
         --packages) install_packages ;;
         --panic) install_panic_button ;;
         --video) install_video_viewer ;;
